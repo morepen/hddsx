@@ -1,0 +1,31 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/detail/detail",
+    "pages/usercenter/usercenter",
+    "pages/write/index",
+    "pages/life/life",
+    "pages/life/comment",
+    "pages/card/index",
+    "pages/mood/write"
+  ],
+  "tabBar": {
+    "color": "#464a56",
+    "selectedColor": "#03b349",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "images/tab/activity1.png",
+        "selectedIconPath": "images/tab/activity2.png"
+      },
+      {
+        "pagePath": "pages/usercenter/usercenter",
+        "iconPath": "images/tab/my1.png",
+        "selectedIconPath": "images/tab/my2.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}

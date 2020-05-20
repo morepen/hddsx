@@ -1,0 +1,63 @@
+<view class="item-box">
+   <div class="card post-card">
+        <div class="card-header">
+          <div class="avatar"> 
+          <image class="avatar_img" src="{{cur_item.avatarUrl}}" mode="cover"></image>
+          </div> 
+          <div class="user flex-column">
+          <div class="name">
+            {{cur_item.nickName}}
+          </div> 
+          <div class="time">
+            {{cardtime}}
+          </div>
+          </div>
+        </div> 
+        <div class="card-content">
+          <div class="text">
+            {{cur_item.content}}
+          </div> 
+          <!--图片描述-->
+          <!-- <image class="avatar_img" src="{{item.piclist}}" mode="cover"></image> -->
+          <view wx:if="{{cur_item.piclist}}" class="list-dImg">
+          <div class="card_pic">
+          <image bindtap="imgYu" class="pic_item" data-list="{{piclist}}" wx:for="{{piclist}}" wx:for-item="dImg" src="{{pichost}}{{dImg}}"></image>
+          </div>
+          </view>
+        <div class="address">{{item.address==null?"暂无地址":item.address}}</div>
+        </div>
+      </div>
+  <div class="box_border"></div> 
+  <div class="commentlist">
+     <div class="comment_title">评论列表</div>
+
+     <view wx:for="{{commentlist}}" wx:key="{{index}}" class="item" wx:if="{{isShow}}">
+     <div class="card-header pl16">
+          <div class="avatar"> 
+          <image class="avatar_img" src="{{item.avatarUrl}}" mode="cover"></image>
+          </div> 
+          <div class="user flex-column">
+          <div class="name">
+            {{item.nickName}}
+          </div> 
+          <div class="time">
+            {{item.createtime}}
+          </div>
+          </div>
+        </div> 
+        <div class="card-content">
+          <div class="text pl16">
+            {{item.content}}
+          </div> 
+      </div>
+    </view>
+     <div class="no-record" wx:if="{{isShow1}}">暂无评论</div>
+  </div> 
+  <div class="box_border"></div>
+ <div class="content_box">
+     <textarea class="card_comment"  placeholder="写评论..."  bindinput="setContent"  value="" name="content"/>
+
+    <div>
+    <button class="writeSub" bindtap="createComment">确认</button></div>
+     </div>
+</view>

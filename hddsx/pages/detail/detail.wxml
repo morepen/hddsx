@@ -1,0 +1,53 @@
+<scroll-view scroll-y="true" class="contain_detail_cnt" style="height:{{winHeight - 40}}px;">
+<import src="../../pages/wxParse/wxParse.wxml"/>  
+	<!-- 内容 -->
+	<view class="content" scroll-y="true">
+    
+    <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+        <block wx:for="{{imgUrl}}" wx:key="index">
+            <swiper-item>
+                <image src="{{item}}" class="slide-image" />
+            </swiper-item>
+        </block>
+    </swiper>
+     
+    <div class="rlue_content">  
+      <div class="title">{{article.title}}</div>
+      <div class="small_title">{{article.createtime}}/限制人数{{article.people}}人</div>
+      <div class="content_text">
+       <rich-text nodes="{{article.content}}"></rich-text>
+      </div>
+    </div>
+    <div class="rlue_item">
+      <div class="text_item"><cover-image wx:if="{{isshade==false}}" class="text_icon" src="../../images/tab/1.png"></cover-image>开始时间：{{article.starttime}}</div>
+      <div class="text_item"><cover-image wx:if="{{isshade==false}}" class="text_icon" src="../../images/tab/2.png"></cover-image>结束时间：{{article.endtime}}</div>
+      <div class="text_item"><cover-image wx:if="{{isshade==false}}" class="text_icon" src="../../images/tab/3.png"></cover-image>活动地点：{{article.address}}</div>
+      <div class="text_item"><cover-image wx:if="{{isshade==false}}" class="text_icon" src="../../images/tab/4.png"></cover-image>联系方式：{{article.contactname}}/{{article.contacttel}}</div>
+     </div>
+
+      <div class="goadd"><div class="money"><span class="money_text">活动费用:{{article.money}}元</span></div><div class="add" bindtap="toBook">填写报名信息</div></div>
+
+      <div class="shadow" wx:if="{{isshade}}">
+        <div class="edit_add">
+          <div class="edit_head">请填写以下信息，方便活动核实</div>
+           <input class="edit_input" placeholder="请填写您的姓名" bindinput="setUsername"></input>
+           <input class="edit_input" placeholder="请填写您的电话" bindinput="setTel"></input>
+           <div><div class="btn" bindtap="AddBook">提交并支付活动费用<span class="money_num">¥{{article.money}}元</span></div></div>
+           <cover-image class="close" src="../../images/close.png" bindtap="closeBook" wx:if="{{isshade}}"></cover-image>
+        </div>
+      
+      
+      </div>
+	</view>
+
+
+
+
+
+
+
+</scroll-view>
+
+
+
+

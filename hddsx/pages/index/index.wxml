@@ -1,0 +1,28 @@
+
+
+<view>
+<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" class="cover_wrap" duration="{{duration}}">
+        <block wx:for="{{coverList}}" wx:key="index">
+            <swiper-item>
+                <image src="{{hosturl+item.pic}}" class="slide-image" />
+            </swiper-item>
+        </block>
+</swiper>
+<div class="index_nav">
+   <div class="nav_item"><div class="item_bg1"> <cover-image class="item_img" src="../../images/tab/index1.png"></cover-image></div><div class="nav_text">分类</div></div>
+   <div class="nav_item"><div class="item_bg2" bindtap="toLife"> <cover-image class="item_img" src="../../images/tab/index2.png"></cover-image></div><div class="nav_text">动态</div></div>
+   <div class="nav_item"><div class="item_bg3" bindtap="toWrite"> <cover-image class="item_img" src="../../images/tab/index5.png"></cover-image></div><div class="nav_text">发布</div></div>
+   <div class="nav_item"><div class="item_bg4"> <cover-image class="item_img" src="../../images/tab/index4.png"></cover-image></div><div class="nav_text">关于</div></div>
+
+</div>
+<div class="title_head">活动推荐</div>
+<view class="themes-list-box article_box" wx:for="{{articleList}}" bindtap="toDetail" data-cur="{{item.id}}">
+        <cover-image class="article_img" src="{{item.pics}}"></cover-image>
+        <div class="article_list" >
+             <div class="item_title">{{item.title}}</div>
+             <div>Time:{{item.starttime}}</div>
+             <div>{{item.money}}</div>
+        </div>
+        
+</view>
+</view>

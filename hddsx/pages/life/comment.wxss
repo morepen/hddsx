@@ -1,0 +1,155 @@
+.choose{
+  float:right
+}
+.send_btn{
+  display:block
+}
+.item-box{
+  background:#fff;
+}
+.content_box{
+  display:block;
+  background:#fff;
+  padding-bottom:20px;
+}
+.writeSub{
+  width:400rpx;height:80rpx;line-height:80rpx;text-align:center;font-size:16px;border:0 none;background:#BE925C;color:#fff;margin:30rpx auto
+}
+.card_comment{
+  width:100%;
+  padding-top:10px;
+  text-indent:10px;
+}
+.box_border{
+   display:block;
+   background:#eeeeee;
+   height:20px;
+}
+.post-card {
+  display:block;
+  background:#fff;
+  margin: 10px 0;
+  /* border-top: 1px solid #dadada;
+  border-bottom: 1px solid #dadada; */
+}
+.avatar{
+  display:inline-block;
+}
+.user{
+  display:inline-block;
+  padding-left:10px;
+}
+.user .name {
+    display:block;
+    color: #ff9800;
+    font-weight: 700;
+    font-size: 14px;
+}
+.user .time {
+   display:block;
+    font-size: 12px;
+    color: #8999a5;
+    margin-top: 3px;
+}
+.text{
+  display:block;
+   padding: 5px 10px;
+}
+
+.card-header .avatar_img {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    margin-top:5px;
+    margin-left:5px;
+}
+.card-header:after {
+    content: "";
+    position: absolute;
+    display: block;
+    z-index: 15;
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    width: 100%;
+    transform-origin: 50% 100%;
+}
+.card-footer{
+  display:block;
+}
+.card-footer{
+  overflow:hidden
+}
+.flex-rest-width{
+  width:50%;
+  float:left;
+  text-align:center;
+  line-height:30px;
+}
+
+.foot-border {
+    display:inline-block;
+    width:100%;
+}
+
+
+.write {
+  width: 100rpx;
+  height: 100rpx;
+  position:fixed;
+  bottom: 100rpx;
+  right: 20rpx;
+}
+
+.write cover-image {
+  width: 100rpx;
+  height: 100rpx;
+}
+.card_pic{
+  display: block;
+  margin-left:10px;
+  margin-right:10px;
+}
+.pic_item{
+  width:80px;
+  height:80px;
+  margin-right:10px;
+  margin-bottom:10px;
+}
+.address{
+  line-height:30px;
+  color:#ff9800;
+  padding-left:10px;
+}
+.comment_title{
+  display:block;
+  margin-left:5px;
+  border-left:#ff9800 solid 3px;
+  line-height:20px;
+  height:20px;
+  margin-top:10px;
+  margin-bottom:10px;
+  padding-left:10px;
+}
+.pl16{
+  padding-left:10px;
+}
+.commentlist{
+  display:block;
+  padding-bottom:16px;
+}
+.content_box{
+  padding:10px;
+}
+.card_comment{
+  border:#e1e1e1 solid 1px;
+}
+.no-record{
+  display:block;
+  text-align:center;
+  color:#eee;
+  line-height:30px;
+  padding-bottom:14px;
+}

@@ -1,0 +1,65 @@
+
+
+
+
+<view class="item-box">
+
+  <view class="item_head">
+    <div class="card_name">#{{groupname}} | 已有{{groupnum}}人参加签到 </div> 
+    <!-- <div class="searchSubmit" bindtap="JoinMember">{{isgroup==0 ?'已加入':'签到'}}</div> -->
+    <div class="searchSubmit" bindtap="toCard">打卡</div>
+  </view>
+  <view class="items">
+    <view wx:for="{{list}}" wx:key="{{index}}" class="item">
+      <div class="card post-card">
+        <div class="card-header">
+          <div class="avatar"> 
+          <image class="avatar_img" src="{{defaultavatarUrl}}" mode="cover"></image>
+          </div> 
+          <div class="user flex-column">
+          <div class="name">
+            {{item.nickName}}
+          </div> 
+          <div class="time">
+            {{item.createtime}}
+          </div>
+          </div>
+        </div> 
+        <div class="card-content">
+          <div class="text">
+            {{item.content}}
+          </div> 
+          <!--图片描述-->
+          <!-- <image class="avatar_img" src="{{item.piclist}}" mode="cover"></image> -->
+          <view wx:if="{{item.piclist}}" class="list-dImg">
+          <div class="card_pic">
+            <view class='imgList-li' wx:for='{{item.piclist}}' wx:for-item="items" wx:for-index="indexs">
+
+            <image class="pic_item" src='{{pichost}}{{items}}' data-order='{{indexs}}' data-arr='{{item.piclist}}' bindtap='previewImg'></image>
+            </view>
+          <!-- <image bindtap="imgYu" class="pic_item" data-list="{{item.piclist}}"  wx:for="{{item.piclist}}" wx:for-item="dImg" src="{{pichost}}{{dImg}}"></image> -->
+          </div>
+        <div class="address">{{item.address==null?"火星":item.address}}</div>
+</view>
+          <!---->
+        </div> 
+        <div class="card-footer flex-row">
+          <a href="#" class="tool tool-border flex-rest-width link" bindtap="toComment" data-cur="{{item.id}}" ><div class="foot-border"><cover-image class="small_icon" src="../../images/comment.png"></cover-image></div></a> 
+          <a href="#" class="tool flex-rest-width link" bindtap="toLike" data-id="{{item.id}}"><cover-image class="small_icon" src="../../images/love.png"></cover-image></a>
+        </div>
+        </div>
+    </view>
+  </view>
+  <!-- <view hidden="{{isroot==1?true:false}}"> -->
+  <view hidden="true">
+    <div class="root_show">
+     非圆桌成员,只能查看一条信息
+    </div>
+   </view>
+
+   <cover-view class="write" bindtap="toWrite">
+      <cover-image style="" src="../../images/write.png"></cover-image>
+    </cover-view>
+</view>
+
+

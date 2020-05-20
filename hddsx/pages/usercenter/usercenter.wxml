@@ -1,0 +1,75 @@
+<view class='personal-top white-bg f34'>
+  <image class='pers-img' src='{{userInfo.avatarUrl}}'></image>
+  <text class='pers-text'>{{userInfo.nickName}}</text>
+</view>
+<view class='gap-20'></view>
+
+
+<view class='personal-item flex f-j-between f-a-center p4 f30 white-bg'>
+  <view><image class='item-icon' src='../../images/icon_8.png'></image>个人积分</view>
+  <image class='item-arrow' src='../../images/icon_9.png'></image>
+</view>
+
+
+
+<view class='personal-item flex f-j-between f-a-center p4 f30 white-bg'>
+  <view><image class='item-icon' src='../../images/icon_7.png'></image>活动管理</view>
+  <image class='item-arrow' src='../../images/icon_9.png'></image>
+</view>
+
+<view class='personal-item flex f-j-between f-a-center p4 f30 white-bg' bindtap="toLife">
+  <view><image class='item-icon' src='../../images/icon_7.png'></image>我的动态</view>
+  <image class='item-arrow' src='../../images/icon_9.png'></image>
+</view>
+
+
+<view class='personal-item flex f-j-between f-a-center p4 f30 white-bg' bindtap="toCard" >
+  <view><image class='item-icon' src='../../images/icon_16.png'></image>打卡</view>
+  <view>
+    <view class='item-dot' wx:if='{{inviteDot}}'></view>
+    <image class='item-arrow' src='../../images/icon_9.png'></image>
+  </view>  
+</view>
+<view class='personal-item flex f-j-between f-a-center p4 f30 white-bg'>
+  <view><image class='item-icon' src='../../images/icon_6.png'></image>客服电话</view>
+  <view class='item-phone f36'>{{servicePhone}}</view>
+</view>
+<view class='gap-20'></view>
+
+<navigator  class='personal-item flex f-j-between f-a-center p4 f30 white-bg'>
+  <view><image class='item-icon' src='../../images/icon_5.png'></image>关于我们</view>
+  <image class='item-arrow' src='../../images/icon_9.png'></image>
+</navigator>
+
+<navigator class='personal-item flex f-j-between f-a-center p4 f30 white-bg'>
+  <view><image class='item-icon' src='../../images/icon_4.png'></image>业务合作</view>
+  <image class='item-arrow' src='../../images/icon_9.png'></image>
+</navigator>
+
+<!-- 协议弹框 -->
+<view class='bomb-box' wx:if='{{showBombStatus}}'>
+  <view class='black-bg'></view>
+  <view class='box-con white-bg center'>
+    <text class='item-tit block t-center f36'>温馨提示</text>
+    <view class='item-con f28'>
+      <text>我已阅读并同意以下协议：</text>
+      <navigator class='gold' url='../commitment/commitment'><text class='f36'>·</text>《产融通众筹参与者规则》</navigator>
+      <navigator class='gold' url='../userProtocol/userProtocol'><text class='f36'>·</text>《用户协议》</navigator>
+    </view>
+    <view class='item-bot f34 clear t-center'>
+       <!-- <view class='item-btn item-btn1 left' bindtap='closeBomb'>关闭</view>  -->
+      <!-- <view class='item-btn item-btn1 left'>关闭</view> -->
+      <view class='item-btn gold left' bindtap='agreeBomb'>确定</view>
+    </view>
+  </view>
+</view>
+
+<!-- 授权弹层 -->
+<view class='authorize-box' wx:if='{{showAuthorizeStatus}}'>
+  <view class='black-bg'></view>
+  <view class='authorize-con white-bg center'>
+    <text class='authorize-tit block t-center f36'>兴趣打卡</text>
+    <button class='authorize-btn f36 white'  open-type="getUserInfo" bindgetuserinfo="toGotUserInfo" bindtap='gotUserInfo'>微信账号快速登录</button>
+  </view>  
+</view>
+

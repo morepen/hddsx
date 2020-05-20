@@ -1,0 +1,182 @@
+.container{
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+.map {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* 中心标记点 */
+.center {
+  width:32px;
+  height:40px;
+  margin: 0 auto;
+  position: relative;
+  top: calc( 50% - 40px );
+}
+
+/* 搜索按钮 */
+.searchbtn {
+  width: 120rpx;
+  height: 120rpx;
+  position: absolute;
+  bottom: 300rpx;
+  left: 20rpx;
+}
+
+.searchbtn cover-image {
+  width: 120rpx;
+  height: 120rpx;
+}
+
+/* 复位按钮 */
+.location {
+  width: 120rpx;
+  height: 120rpx;
+  position: absolute;
+  bottom: 210rpx;
+  left: 20rpx;
+}
+
+.location cover-image {
+  width: 120rpx;
+  height: 120rpx;
+}
+
+
+.square{
+   width: 144rpx;
+  height: 144rpx;
+  position: absolute;
+  bottom: 340rpx;
+  right: 0;
+}
+.square cover-image {
+  width: 144rpx;
+  height: 144rpx;
+}
+
+/* user按钮 */
+
+
+.person {
+  width: 144rpx;
+  height: 144rpx;
+  position: absolute;
+  bottom: 210rpx;
+  right: 0;
+}
+
+.person cover-image {
+  width: 144rpx;
+  height: 144rpx;
+}
+
+/* 详细位置展示 */
+.address{
+  position: absolute;
+  width: 710rpx;
+  height: 120rpx;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  background-color: #fff;
+  box-sizing: border-box;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  bottom: 60rpx;
+}
+
+.address-desc{
+  font-size: 26rpx;  
+  height: 80rpx;
+}
+
+.address-desc .blur{
+  font-size: 30rpx;
+  color: #333333;
+}
+
+.address-desc .detailed{
+  padding-top: 10rpx;
+    color: #c7c7c7;
+}
+
+.address-btn{
+  flex: 1;
+  text-align: center;
+  color: #666666;
+}
+
+/* button:after {
+  border: none;
+} */
+
+.authorize-box,.bomb-box{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top:0;
+  left: 0;
+  z-index: 2
+}
+.black-bg{
+  width: 100%;
+  height: 100%;
+  background: #000;
+  opacity: 0.5
+}
+.box-con,.authorize-con{
+  width: 76%;
+  border-radius: 10rpx;
+  position:fixed;
+  height:100px;
+  margin-top:-50px;
+  top:50%;
+  left:12%;
+  z-index:999999999; 
+  background:#fff;  
+}
+.box-con .item-tit{
+  line-height: 102rpx;
+  border-bottom: 1rpx solid #c9c9c9;
+}
+.box-con .item-con{
+  padding: 30rpx 95rpx;
+  line-height: 60rpx;
+  border-bottom: 1rpx solid #c9c9c9;
+}
+.box-con .item-btn{
+  width: 100%;
+  line-height: 100rpx;
+}
+.box-con .item-btn1{
+  box-sizing: border-box;
+  border-right: 1rpx solid #c9c9c9;
+}
+.authorize-tit{
+  display:block;
+  line-height: 100rpx;
+  text-align:center
+}
+.authorize-btn{
+  width: 88%;
+  background: #51a939;
+  height:36px;
+  line-height:36px;
+  color:#fff;
+  }
+.authorize-btn-img{
+  width: 50rpx;
+  height: 41rpx;
+  vertical-align: middle;
+  margin: 0 15rpx 0 0;
+}

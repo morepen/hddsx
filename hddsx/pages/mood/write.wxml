@@ -1,0 +1,36 @@
+
+      <view class="imgsBox" style='padding:0 30rpx;flex-wrap:wrap;'>
+                  <view class='uploadimgbox' wx:for="{{uploadArr}}" wx:key="item">
+                      <image class='uploadimg' src='{{item.path}}' data-presrc="{{item.path}}" bindtap='previewImg' mode='aspectFill'></image>
+                      <cover-view class='progress' wx:if="{{uploadProgress}}">
+                          {{item.progress}}%
+                      </cover-view>
+                      <cover-view class='delbtn' data-index="{{index}}" data-type="image" bindtap='delFile'>X</cover-view>
+                  </view>
+                  <view class='uploadimgbox' wx:for="{{upVideoArr}}" wx:key="item">
+                      <video class='uploadimg' src="{{item.tempFilePath}}"  controls ></video>
+                    <cover-view class='progress' wx:if="{{uploadProgress}}">
+                          {{item.progress}}%
+                      </cover-view>
+                      <cover-view class='delbtn' data-index="{{index}}" data-type="video" bindtap='delFile'>X</cover-view>
+                  </view>
+                  
+                  <view class='uploadimgbox' wx:if="{{uploadBtn}}">
+                      <image class='uploadbtn' bindtap='uploadFiles' src='../../images/activity_photo.png'></image>
+                  </view>
+            </view>
+
+    
+    <input hidden="true" placeholder="输入标题（选）"  class="add_title" value="" bindinput="setTitle" name="title"/>
+    <view  class="addConent">
+        <textarea  placeholder="记下这一刻的心情" maxlength="1000" bindinput="setContent"  value="" name="content"/>
+    </view>
+    <label for="changePublic" hidden="true">
+        <switch checked="{{isPublic}}" bindchange="changePublic" type="checkbox" name="is_hide"/>
+        <text>邮寄心情</text>
+    </label>
+    <!-- <button class="writeSub"bindtap='saveFiles'>发布</button> -->
+    <button class="writeSub" bindtap='saveFiles'>发布</button>
+
+
+  

@@ -1,0 +1,57 @@
+   <view class="write">
+   <div class="rlue_item">
+  
+      <div class="text_item"><div class="input_text">活动名称：</div><input class="edit_input" bindinput="setTitle" placeholder="请填写活动名称"></input></div>
+      <div class="text_item"><div class="input_text">活动地点：</div><input class="edit_input" bindinput="setAddress" placeholder="请填写活动地点"></input></div>
+      <div class="text_item"><div class="input_text">活动人数：</div><input class="edit_input" bindinput="setPeople" placeholder="10人"></input></div>
+      <div class="text_item"><div class="input_text">活动金额：</div><input class="edit_input" bindinput="setMoney" placeholder="0元"></input></div>
+      <div class="text_item"><div class="input_text">开始时间：</div><view class="edit_input">
+  <picker mode="date" value="{{starttime}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange1">
+    <view class="picker">
+       {{starttime}}
+    </view>
+  </picker>
+</view></div>
+    <div class="text_item"><div class="input_text">结束时间：</div><view class="edit_input">
+  <picker mode="date" value="{{endtime}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange2">
+    <view class="picker">
+       {{endtime}}
+    </view>
+  </picker>
+</view></div>
+      
+      <div class="text_item"><div class="input_text">联系人：</div><input class="edit_input" bindinput="setUsername" placeholder="请填写您的姓名"></input></div>
+      <div class="text_item"><div class="input_text">联系电话：</div><input class="edit_input" bindinput="setTel" placeholder="请填写您的联系电话"></input></div>
+    </div>
+
+      <view class="imgsBox" style='padding:0 30rpx;flex-wrap:wrap;'>
+                  <view class='uploadimgbox' wx:for="{{imageurl}}" wx:key="item">
+                      <image class='uploadimg' src='{{item}}' data-presrc="{{item}}" bindtap='previewImg' mode='aspectFill'></image>
+                      <cover-view class='progress' wx:if="{{uploadProgress}}">
+                          {{item.progress}}%
+                      </cover-view>
+                      <cover-view class='delbtn' data-index="{{index}}" data-type="image" bindtap='delFile'>X</cover-view>
+                  </view>
+
+                  
+                  <view class='uploadimgbox' wx:if="{{uploadBtn}}">
+                      <image class='uploadbtn' bindtap='uploadImg' src='../../images/activity_photo.png'></image>
+                  </view>
+            </view>
+
+    
+
+    <view  class="addConent">
+        <textarea class="content_text"  placeholder="活动描述" maxlength="1000" bindinput="setContent"  value="" name="content"/>
+    </view>
+    <button class="writeSub" bindtap='saveFiles'>发布</button>
+ 
+  
+  
+
+    <button open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo" hidden='true'>
+  获取用户信息
+</button>
+</view>
+
+  
