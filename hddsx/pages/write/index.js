@@ -22,7 +22,13 @@ Page({
     deskid:'',
     uniqueid:'1111111',
     imgData:[],
-    multiArray: [['今天', '明天', '3-2', '3-3', '3-4', '3-5'], [0, 1, 2, 3, 4, 5, 6], [0, 10, 20]]
+    multiArray: [['今天', '明天', '3-2', '3-3', '3-4', '3-5'], [0, 1, 2, 3, 4, 5, 6], [0, 10, 20]],
+    typeArray:["旅游","亲子","文娱","健身"],
+    typeresult:"请选择",
+    typevalue:'-1',
+    dsxArray:["大师兄_段茂","大师兄_现代田园"],
+    dsxresult:"请选择",
+    dsxvalue:'-1'
   },
 
   onLoad(options) {
@@ -46,6 +52,29 @@ Page({
       endtime: e.detail.value
     })
   },
+  bindPickerChange3: function (e) {
+   
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+
+    
+    this.setData({
+      typevalue: e.detail.value,
+      typeresult: this.data.typeArray[e.detail.value]
+    })
+    
+  },
+  bindPickerChange4: function (e) {
+   
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+
+    
+    this.setData({
+      dsxvalue: e.detail.value,
+      dsxresult: this.data.dsxArray[e.detail.value]
+    })
+    
+  },
+  
   //监听账号输入
   setTitle: function (e) {
     this.data.title = e.detail.value;
@@ -101,7 +130,7 @@ Page({
     })
     debugger;
     wx.uploadFile({
-      url: app.globalData.url +'wxPicUpLoad',
+      url: app.globalData.url +'/public/wxPicUpLoad',
       filePath: imgPaths[count],
           name: 'file',
           formData: {
@@ -195,7 +224,13 @@ Page({
       return false;
     } 
 
-    
+    if (this.data.typevalue == "-1") {
+      wx.showModal({
+        content: "活动类型未选择",
+        showCancel: false
+      })
+      return false;
+    } 
    
 
     if (this.data.username == null || this.data.username == undefined || this.data.username == '') {
@@ -229,7 +264,13 @@ Page({
       })
       return false;
     } 
-
+    if (this.data.dsxvalue == "-1") {
+      wx.showModal({
+        content: "请至少选择一名大师兄参与组建活动",
+        showCancel: false
+      })
+      return false;
+    } 
     
           this.setData({
             uploadProgress: false,
@@ -237,7 +278,7 @@ Page({
             uploadArr: null,
           })
           wx.request({
-            url: app.globalData.url + 'wxCreateActivity',
+            url: app.globalData.url + '/public/wxCreateActivity',
             data: {
               title:this.data.title,
               people:this.data.people,
@@ -248,7 +289,11 @@ Page({
               username:this.data.username,
               tel:this.data.tel,
               content:this.data.content,
-              imageurl: this.data.imgData
+              imageurl: this.data.imgData,
+              typeresult:this.data.typeresult,
+              typevalue:this.data.typevalue,
+              dsxresult:this.data.dsxresult,
+              dsxvalue:this.data.dsxvalue
             },
             header: {
               'content-type': 'application/json' // 默认值

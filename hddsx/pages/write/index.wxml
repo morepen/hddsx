@@ -3,6 +3,13 @@
   
       <div class="text_item"><div class="input_text">活动名称：</div><input class="edit_input" bindinput="setTitle" placeholder="请填写活动名称"></input></div>
       <div class="text_item"><div class="input_text">活动地点：</div><input class="edit_input" bindinput="setAddress" placeholder="请填写活动地点"></input></div>
+      <div class="text_item"><div class="input_text">活动类型：</div>
+      <view class="edit_input">
+            <picker bindchange="bindPickerChange3" value="{{index}}" range="{{typeArray}}">
+                  <view class="type_result">{{typeresult}}</view>
+            </picker>
+            </view>
+      </div>
       <div class="text_item"><div class="input_text">活动人数：</div><input class="edit_input" bindinput="setPeople" placeholder="10人"></input></div>
       <div class="text_item"><div class="input_text">活动金额：</div><input class="edit_input" bindinput="setMoney" placeholder="0元"></input></div>
       <div class="text_item"><div class="input_text">开始时间：</div><view class="edit_input">
@@ -22,6 +29,15 @@
       
       <div class="text_item"><div class="input_text">联系人：</div><input class="edit_input" bindinput="setUsername" placeholder="请填写您的姓名"></input></div>
       <div class="text_item"><div class="input_text">联系电话：</div><input class="edit_input" bindinput="setTel" placeholder="请填写您的联系电话"></input></div>
+      <div class="text_item"><div class="input_text">大师兄：</div>
+      <view class="edit_input">
+            <picker bindchange="bindPickerChange4" value="{{index}}" range="{{dsxArray}}">
+                  <view class="type_result">{{dsxresult}}</view>
+            </picker>
+            </view>
+      </div>
+
+
     </div>
 
       <view class="imgsBox" style='padding:0 30rpx;flex-wrap:wrap;'>

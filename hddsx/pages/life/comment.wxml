@@ -14,7 +14,7 @@
           </div>
         </div> 
         <div class="card-content">
-          <div class="text">
+          <div class="text" wx:if="{{item.content ? true:false}}">
             {{cur_item.content}}
           </div> 
           <!--图片描述-->
@@ -24,7 +24,7 @@
           <image bindtap="imgYu" class="pic_item" data-list="{{piclist}}" wx:for="{{piclist}}" wx:for-item="dImg" src="{{pichost}}{{dImg}}"></image>
           </div>
           </view>
-        <div class="address">{{item.address==null?"暂无地址":item.address}}</div>
+        <div class="address">{{item.address==null?"火星":item.address}}</div>
         </div>
       </div>
   <div class="box_border"></div> 

@@ -1,16 +1,34 @@
 .item-box{
-  background:#fff;
+  position:relative;
+  top:0px;
+  left:0px;
+  border-radius:6px;
+}
+.post-card{
   position:relative;
   top:0px;
   left:0px;
 }
-
+.user_btn{
+  position:absolute;
+  right:40rpx;
+  top:30px;
+  /* width: 44px; */
+  height: 24px;
+  font-size: 14px;
+  background:#03b349;
+  border-radius:12px;
+  color:#fff;
+  text-align:center;
+  line-height:24px;
+  padding:0px 10px;
+}
 .post-card {
   display:block;
   background:#fff;
-  margin: 10px 0;
-  border-top: 1px solid #dadada;
-  border-bottom: 1px solid #dadada;
+  margin: 16px 10px;
+  
+  
 }
 .avatar{
   display:inline-block;

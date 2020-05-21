@@ -7,7 +7,12 @@ App({
     secret: '5829c02512ae28aed3db0df44e5c89bb',
     openid: '',
     address: '',
-    userInfo: null,
+    userInfo: {
+      openid:'-1',
+      userid:'-1',
+      nickName:'游客',
+      avatarUrl:'../../images/default.jpg'
+    },
     res: 'ok',
     loginStatus: 0,
     fileStr: ''

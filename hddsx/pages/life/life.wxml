@@ -5,7 +5,7 @@
 <view class="item-box">
 
   <view class="item_head">
-    <div class="card_name">#{{groupname}} | 已有{{groupnum}}人参加签到 </div> 
+    <div class="card_name">#{{groupname}} | 已有{{groupnum}}人参加打卡 </div> 
     <!-- <div class="searchSubmit" bindtap="JoinMember">{{isgroup==0 ?'已加入':'签到'}}</div> -->
     <div class="searchSubmit" bindtap="toCard">打卡</div>
   </view>
@@ -26,7 +26,7 @@
           </div>
         </div> 
         <div class="card-content">
-          <div class="text">
+          <div class="text" wx:if="{{item.content ? true:false}}">
             {{item.content}}
           </div> 
           <!--图片描述-->
@@ -45,7 +45,12 @@
         </div> 
         <div class="card-footer flex-row">
           <a href="#" class="tool tool-border flex-rest-width link" bindtap="toComment" data-cur="{{item.id}}" ><div class="foot-border"><cover-image class="small_icon" src="../../images/comment.png"></cover-image></div></a> 
-          <a href="#" class="tool flex-rest-width link" bindtap="toLike" data-id="{{item.id}}"><cover-image class="small_icon" src="../../images/love.png"></cover-image></a>
+          <a href="#" class="tool flex-rest-width link" bindtap="toLike" data-id="{{item.id}}">
+            
+             <cover-image class="small_icon" wx:if='{{item.iszan==1}}' src="../../images/love1.png"></cover-image>
+             <cover-image class="small_icon" wx:else src="../../images/love.png"></cover-image>
+             
+             </a>
         </div>
         </div>
     </view>

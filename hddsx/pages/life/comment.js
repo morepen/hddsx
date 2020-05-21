@@ -14,7 +14,9 @@ Page({
     commentlist:'',
     cardtime:'',
     isShow:true,
-    isShow1: true
+    isShow1: true,
+    pichost: app.globalData.url+'/upload/images/',
+    defaultavatarUrl:'../../images/default.jpg',
   },
   onLoad: function (options) {
 
@@ -82,9 +84,9 @@ Page({
       title: '加载中...',
       mask: true
     })
-    console.log(that.cardid);
+
     wx.request({
-      url: app.globalData.url + 'createCardComment',
+      url: app.globalData.url + '/public/createCardComment',
       data: {
         cardid:that.data.cardid,
         content:that.data.content,
@@ -96,8 +98,30 @@ Page({
       },
       success: function (res) {
         wx.hideLoading();
-        console.log(res.data);
+        
+
+
         if (res.data.code == 200) {
+
+
+
+          var cur_item={
+            content:that.data.content,
+            nickName: app.globalData.userInfo.nickName,
+            avatarUrl: app.globalData.userInfo.avatarUrl,
+            createtime:"刚刚"
+          }
+          var coment_Arr=that.data.commentlist;
+          coment_Arr.push(cur_item);
+          that.setData({
+            commentlist: coment_Arr  
+          });
+          that.setData({
+            content: ""  
+          });
+          debugger;
+
+
           wx.showToast({
             title: '成功',
             icon: 'succes',
@@ -106,11 +130,19 @@ Page({
            })
 
         } else { 
-
+          wx.showToast({
+            title: '操作失败',
+            icon: 'succes',
+            duration: 1000,
+            mask:true
+           })
 
         }
       }
     })
+
+
+    
   }
  
 

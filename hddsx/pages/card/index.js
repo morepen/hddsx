@@ -114,7 +114,7 @@ Page({
         app.globalData.openid = wx.getStorageSync('openid');
 
         wx.request({
-          url: app.globalData.url + 'createWxUser',
+          url: app.globalData.url + '/public/createWxUser',
           data: {
             openid: wx.getStorageSync('openid'),
             nickName: app.globalData.userInfo.nickName,
@@ -128,7 +128,7 @@ Page({
             wx.hideLoading();
             console.log(res.data);
             if (res.data.code == 200) {
-              debugger;
+             
               console.log("登陆成功");
             }
           }
@@ -296,24 +296,39 @@ Page({
    * 数据请求-打卡
    */
   clockRequest: function(opt) {
-    console.log('传递的参数', opt)
-    let url = '/mock/5aded45053796b38dd26e970/comments#!method=get';
-    request.getRequest(url, opt)
-      .then(res => {
-        let data = res.data;
-        console.log('接口请求的数据', data)
-        wx.showToast({
-          title: '打卡成功~',
-          icon: 'success',
-          duration: 1000
-        })
-      })
-      .catch(res => {
-        wx.showToast({
-          title: '出错啦~~',
-          icon: 'none'
-        })
-      })
+    var that=this;
+    wx.showLoading({
+      title: '加载中...',
+      mask: true
+    })
+    wx.request({
+      url: app.globalData.url + '/public/wxCardAddress',
+      data: opt,
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function (res) {
+        wx.hideLoading();
+        if (res.data.code == 200) {
+          wx.showToast({
+            title: '打卡成功',
+            icon: 'succes',
+            duration: 1000,
+            mask:true
+           })
+        } else { 
+          wx.showToast({
+            title: '操作失败',
+            icon: 'succes',
+            duration: 1000,
+            mask:true
+           })
+        }
+      }
+    })
+       
+
+      
   },
 
   /**
@@ -321,19 +336,6 @@ Page({
    */
   clockInOut: function(e) {
     //登录才可打卡
-    if(!app.globalData.loginStatus) {
-      wx.showModal({
-        title: '提示',
-        content: '请先登录~',
-        success: (res) => {
-          if (res.confirm) {
-            wx.navigateTo({
-              url: '/pages/login/login'
-            })
-          }
-        }
-      })
-    } else {
       console.log('打卡请求', e)
       let that = this;
       let dataset = e.currentTarget.dataset;
@@ -343,14 +345,18 @@ Page({
       let lng = dataset.clocklng;
       let curtimeStamp = + new Date();
       //需要传递给后台的请求参数
+      
       let opt = {
-        userId: '',  //微信用户id String openid 用户的唯一标识
-        title: title, //地名 String
+        openid: app.globalData.userInfo.openid,  //微信用户id String openid 用户的唯一标识
+        userid:app.globalData.userInfo.userid,
+        nickname:app.globalData.userInfo.nickName,
+        nickimage:app.globalData.userInfo.avatarUrl,
         address: address, //具体地址 String
         lat: lat, //纬度 Number
         lng: lng, //经度 Number
         create_time: curtimeStamp //打卡当前时间戳 Number
       }
+     
       wx.showModal({
         title: '打卡签到',
         content: `地址：${title}`,
@@ -359,13 +365,13 @@ Page({
         cancelColor: '#999',
         success (res) {
           if (res.confirm) {
-            // that.clockRequest(opt);
+              that.clockRequest(opt);
           } else if (res.cancel) {
             console.log('用户点击取消')
           }
         }
       })
-    }
+    
   },
 
   /**
@@ -381,6 +387,7 @@ Page({
     wx.getLocation({
       type: 'gcj02',
       success: function (res) {
+       
         wx.openLocation({
           latitude: lat,
           longitude: lng,
@@ -416,7 +423,7 @@ Page({
   },
   toSquare: function () {
     wx.reLaunch({
-      url: '/pages/desklist/desklist'
+      url: '/pages/cardlist/index'
     })
   },
 

@@ -1,0 +1,37 @@
+
+
+
+
+<view class="item-box">
+
+ 
+    <div wx:for="{{list}}" wx:key="{{index}}" class="card_item">
+      
+      <div class="card post-card">
+      <div class="user_btn" bindtap="toPerson">访问</div>
+        <div class="card-header">
+          <div class="avatar"> 
+          <image class="avatar_img" src="{{item.nickimage}}" mode="cover"></image>
+          </div> 
+          <div class="user flex-column">
+                <div class="name">
+                  {{item.nickname}}
+                </div> 
+                <div class="time">
+                  {{item.createtime}}
+                </div>
+          </div>
+          
+        </div> 
+
+        <div class="card-content">
+          <div class="text">
+            {{item.address}}
+          </div> 
+        </div>
+     
+     </div>
+ </div>
+</view>
+
+

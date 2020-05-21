@@ -48,7 +48,7 @@ Page({
       mask: true
     })
     wx.request({
-      url: app.globalData.url + '/public/GetAllCardList',
+      url: app.globalData.url + '/public/GetCardAddress',
       data: {
         deskid: that.data.deskid,
         openid: app.globalData.openid,
@@ -59,17 +59,15 @@ Page({
         'content-type': 'application/json' // 默认值
       },
       success: function (res) {
-
+       
         wx.hideLoading();
         console.log(res.data);
         if (res.data.code == 200) {
 
           that.data.tagArr = res.data.data.list;
           for (var i = 0; i < that.data.tagArr.length; i++) {
-            that.data.tagArr[i]["piclist"] = JSON.parse(that.data.tagArr[i].piclist);
             that.data.tagArr[i]["createtime"] = time.formatTime(parseInt(that.data.tagArr[i]["createtime"]), 'Y-M-D h:m:s');
           }
-
           that.setData({
             list: that.data.tagArr,
             isroot: res.data.data.isgroup
@@ -85,6 +83,12 @@ Page({
    */
   logout: function () {
 
+  },
+  toPerson: function() {
+    wx.reLaunch({
+      url: '/pages/usercenter/usercenter'
+    })
+    
   },
   toCard: function (event) {
     wx.navigateTo({

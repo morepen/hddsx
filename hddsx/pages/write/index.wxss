@@ -233,3 +233,6 @@ button{width:400rpx;height:80rpx;line-height:80rpx;text-align:center;font-size:1
   padding-top:5px;
   font-size:12px;
 }
+.type_result{
+    font-display:inline-block;
+}
