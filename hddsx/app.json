@@ -8,7 +8,10 @@
     "pages/life/comment",
     "pages/card/index",
     "pages/mood/write",
-    "pages/cardlist/index"
+    "pages/desklist/index",
+    "pages/cardlist/index",
+    "pages/leftTab/index",
+    "pages/wxabout/index"
   ],
   "tabBar": {
     "color": "#464a56",

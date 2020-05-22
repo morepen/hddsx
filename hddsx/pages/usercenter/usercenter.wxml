@@ -5,7 +5,7 @@
 <view class='gap-20'></view>
 
 
-<view class='personal-item flex f-j-between f-a-center p4 f30 white-bg'>
+<view class='personal-item flex f-j-between f-a-center p4 f30 white-bg' bindtap="toWxAbout">
   <view><image class='item-icon' src='../../images/icon_8.png'></image>信誉积分</view>
   <image class='item-arrow' src='../../images/icon_9.png'></image>
 </view>
@@ -27,13 +27,13 @@
     <image class='item-arrow' src='../../images/icon_9.png'></image>
   </view>  
 </view>
-<view class='personal-item flex f-j-between f-a-center p4 f30 white-bg'>
+<view class='personal-item flex f-j-between f-a-center p4 f30 white-bg' bindtap="toWxAbout">
   <view><image class='item-icon' src='../../images/icon_6.png'></image>客服电话</view>
   <view class='item-phone f36'>{{servicePhone}}</view>
 </view>
 <view class='gap-20'></view>
 
-<navigator  class='personal-item flex f-j-between f-a-center p4 f30 white-bg'>
+<navigator  class='personal-item flex f-j-between f-a-center p4 f30 white-bg' bindtap="toWxAbout">
   <view><image class='item-icon' src='../../images/icon_5.png'></image>关于我们</view>
   <image class='item-arrow' src='../../images/icon_9.png'></image>
 </navigator>

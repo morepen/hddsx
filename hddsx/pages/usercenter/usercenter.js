@@ -56,6 +56,11 @@ Page({
     //   }
     // })
   },
+  toWxAbout: function () {
+    wx.navigateTo({
+      url: '../wxabout/index'
+    })
+  },
   toGotUserInfo: function (e) {
     var self = this;
     console.log(e.detail)

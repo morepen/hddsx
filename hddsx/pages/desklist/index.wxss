@@ -1,0 +1,37 @@
+.wx_img{
+  height:120px;
+  border-bottom:#dadada solid 1px;
+  display:inline-block!important;
+}
+.card_item_wrap{
+  position:relative;
+}
+.card_item{
+  position:absolute;
+  display:block;
+  left:0px;
+  top:0px;
+  width:100%;
+}
+.desk_btn_wrap{
+  position:absolute;
+  bottom:10px;
+  left:0px;
+  z-index:999999;
+  width:100%;
+}
+.desk_btn{
+  
+  width:100px;
+  margin:0 auto;
+  display:block;
+  height: 30px;
+  font-size: 14px;
+  background: #03b349;
+  border-radius: 12px;
+  color: #fff;
+  text-align: center;
+  line-height: 30px;
+  padding: 0px 10px;
+
+}

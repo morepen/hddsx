@@ -228,7 +228,7 @@ button{width:400rpx;height:80rpx;line-height:80rpx;text-align:center;font-size:1
 }
 .content_text{
   border:#dadada solid 1px;
-  color:#dadada;
+  color:#333;
   padding-left:5px;
   padding-top:5px;
   font-size:12px;

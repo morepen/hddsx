@@ -1,0 +1,11 @@
+<view >
+
+   <div class="item-box">
+    <div class="wx_text">{{aboutinfo.content}}</div>
+    <div class="image_wrap">
+        <cover-image class="wx_img" src="{{pichost+aboutinfo.image}}"></cover-image>
+    </div> 
+    </div>
+</view>
+
+

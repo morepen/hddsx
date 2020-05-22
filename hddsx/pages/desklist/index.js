@@ -25,16 +25,13 @@ Page({
     isshow: true,
     deskid: '',
     isroot: 1,
-    pichost: app.globalData.url+'/upload/images/',
-    defaultavatarUrl:'../../images/default.jpg',
-    currentItem:''
+    pichost: app.globalData.url,
+    currentItem:'',
+    list:[]
   },
   onLoad: function (options) {
    
-    var id = options.id;
-    this.setData({
-        deskid: id
-      })
+
 
 
   },
@@ -51,7 +48,7 @@ Page({
       mask: true
     })
     wx.request({
-      url: app.globalData.url + '/public/GetAllCardList',
+      url: app.globalData.url + '/public/GetDeskList',
       data: {
         deskid: that.data.deskid,
         openid: app.globalData.openid,
@@ -62,22 +59,17 @@ Page({
         'content-type': 'application/json' // 默认值
       },
       success: function (res) {
-
+       
         wx.hideLoading();
         console.log(res.data);
         if (res.data.code == 200) {
-
-          that.data.tagArr = res.data.data.list;
-          for (var i = 0; i < that.data.tagArr.length; i++) {
-            that.data.tagArr[i]["piclist"] = JSON.parse(that.data.tagArr[i].piclist);
-            that.data.tagArr[i]["createtime"] = time.formatTime(parseInt(that.data.tagArr[i]["createtime"]), 'Y-M-D h:m:s');
-          }
-
+       
+         
+          
           that.setData({
-            list: that.data.tagArr,
-            isroot: res.data.data.isgroup
+            list: res.data.data
           });
-
+          
         } else { }
       }
     })
@@ -89,9 +81,22 @@ Page({
   logout: function () {
 
   },
+  toPerson: function() {
+    wx.reLaunch({
+      url: '/pages/usercenter/usercenter'
+    })
+    
+  },
   toCard: function (event) {
     wx.navigateTo({
       url: '../card/index'
+    })
+  },
+  toLife: function (event) {
+    var cur_item = event.currentTarget.dataset.cur;
+
+    wx.navigateTo({
+      url: '../life/life?id=' + cur_item
     })
   },
   toComment: function (event) {
@@ -110,7 +115,6 @@ Page({
     wx.request({
       url: app.globalData.url + '/public/createCardLike',
       data: {
-        deskid:that.data.deskid,
         cardid: cardid,
         openid: app.globalData.openid
       },
@@ -122,7 +126,7 @@ Page({
         console.log(res.data);
         if (res.data.code == 200) {
           that.zan(cardid);
-          debugger;
+         
           wx.showToast({
             title: '操作成功',
             icon: 'succes',
@@ -146,7 +150,7 @@ Page({
          listArr[j].iszan=1;
       }      
      }
-     debugger;
+     
     this.setData({
       list: listArr
     });

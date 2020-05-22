@@ -1,0 +1,16 @@
+.item-box{
+  width:90%;
+  margin:0 auto;
+  text-align:center;
+  margin-top:5%;
+  box-shadow:0 0 50px rgb（166,124,64）;
+  display: block;
+}
+.wx_text{
+  display: block;
+  background-color:#fff;
+  line-height:40px;
+}
+.image_wrap{
+  width:100%;
+}

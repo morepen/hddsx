@@ -4,15 +4,15 @@
 <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" class="cover_wrap" duration="{{duration}}">
         <block wx:for="{{coverList}}" wx:key="index">
             <swiper-item>
-                <image src="{{hosturl+item.pic}}" class="slide-image" />
+                <image src="{{hosturl+item.picurl}}" class="slide-image" />
             </swiper-item>
         </block>
 </swiper>
 <div class="index_nav">
-   <div class="nav_item"><div class="item_bg1"> <cover-image class="item_img" src="../../images/tab/index1.png"></cover-image></div><div class="nav_text">分类</div></div>
-   <div class="nav_item"><div class="item_bg2" bindtap="toLife"> <cover-image class="item_img" src="../../images/tab/index2.png"></cover-image></div><div class="nav_text">动态</div></div>
+   <div class="nav_item"><div class="item_bg1" bindtap="toLeftTab"> <cover-image class="item_img" src="../../images/tab/index1.png"></cover-image></div><div class="nav_text">分类</div></div>
+   <div class="nav_item"><div class="item_bg2" bindtap="toDeskList"> <cover-image class="item_img" src="../../images/tab/index2.png"></cover-image></div><div class="nav_text">动态</div></div>
    <div class="nav_item"><div class="item_bg3" bindtap="toWrite"> <cover-image class="item_img" src="../../images/tab/index5.png"></cover-image></div><div class="nav_text">发布</div></div>
-   <div class="nav_item"><div class="item_bg4"> <cover-image class="item_img" src="../../images/tab/index4.png"></cover-image></div><div class="nav_text">关于</div></div>
+   <div class="nav_item"><div class="item_bg4" bindtap="toWxAbout"> <cover-image class="item_img" src="../../images/tab/index4.png"></cover-image></div><div class="nav_text">关于</div></div>
 
 </div>
 <div class="title_head">活动推荐</div>

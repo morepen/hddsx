@@ -44,7 +44,6 @@ Page( {
         var id = options.id;
         that.setData({
             id: id
-  
           })
 
 
@@ -52,7 +51,7 @@ Page( {
         title: '加载中...',
         mask: true
       })
-      var url = app.globalData.url + 'getActivityDetail';
+      var url = app.globalData.url + '/public/getActivityDetail';
 
       wx.request({
         url:url,
@@ -74,7 +73,8 @@ Page( {
             var imagelist =JSON.parse(res.data.data[0].pics);
             var imgArr=[];
             for (var i = 0; i < imagelist.length; i++){
-              imgArr.push("https://www.hdhome.net/upload/" + imagelist[i])
+              var _img = app.globalData.url + "/upload/" + imagelist[i];
+              imgArr.push(_img);
             }
             that.setData({
               article: res.data.data[0],

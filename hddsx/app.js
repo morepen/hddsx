@@ -2,7 +2,7 @@
 let scence = 0;
 App({
   globalData: {
-    url: 'http://192.168.1.15:80',
+    url: 'https://www.xdty.net',
     appid: 'wx0affdec7a8911fc3',
     secret: '5829c02512ae28aed3db0df44e5c89bb',
     openid: '',

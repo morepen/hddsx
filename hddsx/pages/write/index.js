@@ -8,8 +8,8 @@ Page({
     address:'',
     people:'10',
     money:'',
-    starttime:'2020-03-01',
-    endtime:'2020-03-01',
+    starttime:'群内确定',
+    endtime:'群内确定',
     username:'',
     tel:'',
     content:'',
@@ -23,7 +23,7 @@ Page({
     uniqueid:'1111111',
     imgData:[],
     multiArray: [['今天', '明天', '3-2', '3-3', '3-4', '3-5'], [0, 1, 2, 3, 4, 5, 6], [0, 10, 20]],
-    typeArray:["旅游","亲子","文娱","健身"],
+    typeArray:["户外","亲子","读书","健身"],
     typeresult:"请选择",
     typevalue:'-1',
     dsxArray:["大师兄_段茂","大师兄_现代田园"],
@@ -307,9 +307,9 @@ Page({
                   content: '发布成功',
                   showCancel: false
                 })
-                //wx.navigateBack({
-                 // delta: 1
-                //})
+                wx.navigateBack({
+                  delta: 1
+                })
 
               }
               else {

@@ -14,8 +14,14 @@ Page({
       autoplay: true,
       interval: 4000,
       duration: 1000,
-      hosturl: app.globalData.url+"/",
-      coverList:[]
+      hosturl: app.globalData.hosturl,
+      typeArray: [
+        {name:"户外",image:"../../images/left1.png" },
+        {name:"亲子",image:"../../images/left2.png" },
+        {name:"读书",image:"../../images/left3.png" },
+        {name:"健身",image:"../../images/left4.png" }
+        ],
+      articleList:[]
     },
     onPullDownRefresh() {
       
@@ -31,8 +37,8 @@ Page({
      * options 为页面跳转所带来的参数
      */
     onLoad: function (options) {
-      this.getCoverList("1");
-      this.getList("9");
+     
+      this.getList("9","0");
      
     },
     onShareAppMessage: function () {
@@ -47,7 +53,12 @@ Page({
         }
       }
     },
-  getList: function (developid){
+  toLeftList:function(event){
+    var cur_item = event.currentTarget.dataset.cur;
+   
+    this.getList("9",cur_item);
+  },
+  getList: function (developid,typevalue){
       var that = this;
       wx.showLoading({
         title: '加载中...',
@@ -58,7 +69,7 @@ Page({
         url: app.globalData.url + '/public/getActivityList',
         data: {
           developid: developid,
-          typevalue:"-1"
+          typevalue:typevalue
 
         },
         header: {
@@ -93,7 +104,7 @@ Page({
     var that = this;
    
     wx.request({
-      url: app.globalData.url + '/public/getCoverList',
+      url: app.globalData.url + 'getCoverList',
       data: {
         type: 1
 
@@ -102,8 +113,8 @@ Page({
         'content-type': 'application/json' // 默认值
       },
       success: function (res) {
-       
-       
+        wx.hideLoading();
+        console.log(res.data);
         if (res.data.code == 200) {
           var res_Arr = res.data.data;
           that.setData({
@@ -132,39 +143,11 @@ Page({
 
 
     },
-  toLeftTab: function (event) {
-    var cur_item = event.currentTarget.dataset.cur;
-
-    wx.navigateTo({
-      url: '../leftTab/index'
-    })
-  },
-  toDeskList: function () {
-    
-
-    wx.navigateTo({
-      url: '../desklist/index'
-    })
-  },
-    toLife: function (event) {
-      var cur_item = event.currentTarget.dataset.cur;
-  
-      wx.navigateTo({
-        url: '../life/life'
-      })
-    },
   toWrite: function (event) {
     var cur_item = event.currentTarget.dataset.cur;
 
     wx.navigateTo({
       url: '../write/index'
-    })
-  },
-  toWxAbout: function () {
-  
-
-    wx.navigateTo({
-      url: '../wxabout/index'
     })
   },
   toDetail: function (event) {

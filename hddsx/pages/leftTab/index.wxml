@@ -1,0 +1,23 @@
+
+
+<view>
+<div class="left_list">
+ <div class="left_list_wrap">
+  <div class="left_item" wx:for="{{typeArray}}"  bindtap="toLeftList" data-cur="{{index}}">
+     <cover-image class="item_img" src="{{item.image}}"></cover-image>
+
+     <div class="item_text">{{item.name}}</div>
+  </div>
+  </div>
+
+</div>
+<view class="right_list" wx:for="{{articleList}}" bindtap="toDetail" data-cur="{{item.id}}">
+        <cover-image class="article_img" src="{{item.pics}}"></cover-image>
+        <div class="article_list" >
+             <div class="item_title">{{item.title}}</div>
+             <div>Time:{{item.starttime}}</div>
+             <div>{{item.money}}</div>
+        </div>
+        
+ </view>
+</view>
