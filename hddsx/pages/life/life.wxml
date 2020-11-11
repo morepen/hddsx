@@ -3,14 +3,25 @@
 
 
 <view class="item-box">
-
-  <view class="item_head">
-    <div class="card_name">#{{groupname}} | 已有{{groupnum}}人参加打卡 </div> 
-    <!-- <div class="searchSubmit" bindtap="JoinMember">{{isgroup==0 ?'已加入':'签到'}}</div> -->
-    <div class="searchSubmit" bindtap="toCard">打卡</div>
+  <!--<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+        <block wx:for="{{imgUrl}}" wx:key="index">
+            <swiper-item>
+                <image src="{{item}}" class="slide-image" />
+            </swiper-item>
+        </block>
+    </swiper> 
+   -->
+   <cover-image class="article_img" src="{{picurl+article.pics}}"></cover-image>
+    <div class="text_item">俱乐部名称：{{article.content}}</div>
+    <div class="text_item">大师兄：{{article.nickname}}/{{article.wx}}</div>
+  <!--<view class="item_head">
+    <div class="card_name">#{{groupname}} | 已有{{groupnum}}人参加活动 </div> 
+     <div class="searchSubmit" bindtap="JoinMember">{{isgroup==0 ?'已加入':'签到'}}</div> 
+    <button class="searchSubmit" open-type="contact">加入</button>
   </view>
+  -->
   <view class="items">
-    <view wx:for="{{list}}" wx:key="{{index}}" class="item">
+    <view wx:for="{{list}}"  class="item">
       <div class="card post-card">
         <div class="card-header">
           <div class="avatar"> 
@@ -18,7 +29,7 @@
           </div> 
           <div class="user flex-column">
           <div class="name">
-            {{item.nickName}}
+            {{item.nickName==null?"游客":item.nickName}}
           </div> 
           <div class="time">
             {{item.createtime}}
@@ -39,8 +50,8 @@
             </view>
           <!-- <image bindtap="imgYu" class="pic_item" data-list="{{item.piclist}}"  wx:for="{{item.piclist}}" wx:for-item="dImg" src="{{pichost}}{{dImg}}"></image> -->
           </div>
-        <div class="address">{{item.address==null?"火星":item.address}}</div>
-</view>
+             <div class="address">{{item.address==null?"":item.address}}</div>
+         </view>
           <!---->
         </div> 
         <div class="card-footer flex-row">

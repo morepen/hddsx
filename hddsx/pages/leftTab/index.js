@@ -5,6 +5,7 @@ const app = getApp();
 
 Page({
     data: {
+      title:'活动列表',
       imgUrl: [
         { url: "../../images/tab/1.png" },
         { url: "../../images/tab/1.png" },
@@ -64,12 +65,14 @@ Page({
         title: '加载中...',
         mask: true
       })
-      
+      that.setData({
+        articleList:[]
+      })
       wx.request({
         url: app.globalData.url + '/public/getActivityList',
         data: {
           developid: developid,
-          typevalue:typevalue
+          typevalue:parseInt(typevalue)+1
 
         },
         header: {
@@ -81,7 +84,7 @@ Page({
           if (res.data.code == 200) {
             var res_Arr = res.data.data;
             for (var i = 0; i < res_Arr.length; i++){
-              res_Arr[i].pics = app.globalData.url+"/upload/" + JSON.parse(res_Arr[i].pics)[0];
+              res_Arr[i].pics =app.globalData.hosturl+"/nginxImage/" +JSON.parse(res_Arr[i].pics)[0];
               //res_Arr[i].starttime = time.formatTime(res_Arr[i].starttime * 1, 'Y-M-D'); 
               if (res_Arr[i].money==0||res_Arr[i].money==null){
                 res_Arr[i].money="免费"
@@ -234,4 +237,23 @@ Page({
       })
 
     },
+    onShareAppMessage: function () {
+      return {
+        title: '活动大师兄',
+        path: 'pages/leftTab/index',
+        success: function (res) {
+          // 分享成功
+        },
+        fail: function (res) {
+          // 分享失败
+        }
+      }
+    },
+    onShareTimeline: () => {
+      return {
+        title: "活动大师兄-"+this.data.title,
+        query: "",
+        imageUrl: "https://www.sxbbt.net/qrcode/hddsx.jpg"
+      }
+    }
 })

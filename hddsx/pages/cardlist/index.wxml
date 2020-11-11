@@ -8,7 +8,7 @@
     <div wx:for="{{list}}" wx:key="{{index}}" class="card_item">
       
       <div class="card post-card">
-      <div class="user_btn" bindtap="toPerson">访问</div>
+      <button class="user_btn" open-type="contact">联系大师兄</button>
         <div class="card-header">
           <div class="avatar"> 
           <image class="avatar_img" src="{{item.nickimage}}" mode="cover"></image>

@@ -10,8 +10,15 @@
             </picker>
             </view>
       </div>
+      <div class="text_item"><div class="input_text">活动会计：</div>
+      <view class="edit_input">
+            <picker bindchange="bindPickerChange4" value="{{index}}" range="{{dsxArray}}">
+                  <view class="type_result">{{dsxresult}}</view>
+            </picker>
+       </view>
+      </div>
+      <div class="text_item"><div class="input_text">活动费用：</div><input class="edit_input" bindinput="setMoney" placeholder="0元"></input></div>
       <div class="text_item"><div class="input_text">活动人数：</div><input class="edit_input" bindinput="setPeople" placeholder="10人"></input></div>
-      <div class="text_item"><div class="input_text">活动金额：</div><input class="edit_input" bindinput="setMoney" placeholder="0元"></input></div>
       <div class="text_item"><div class="input_text">开始时间：</div><view class="edit_input">
   <picker mode="date" value="{{starttime}}" start="2015-01-01" end="2025-12-30" bindchange="bindDateChange1">
     <view class="picker">
@@ -27,20 +34,10 @@
   </picker>
 </view></div>
       
-      <div class="text_item"><div class="input_text">联系人：</div><input class="edit_input" bindinput="setUsername" placeholder="请填写您的姓名"></input></div>
-      <div class="text_item"><div class="input_text">联系电话：</div><input class="edit_input" bindinput="setTel" placeholder="请填写您的联系电话"></input></div>
-      <div class="text_item"><div class="input_text">大师兄：</div>
-      <view class="edit_input">
-            <picker bindchange="bindPickerChange4" value="{{index}}" range="{{dsxArray}}">
-                  <view class="type_result">{{dsxresult}}</view>
-            </picker>
-            </view>
-      </div>
-
-
-    </div>
-
-      <view class="imgsBox" style='padding:0 30rpx;flex-wrap:wrap;'>
+      <div class="text_item"><div class="input_text">创建人：</div><input class="edit_input" bindinput="setUsername" placeholder="请填写您的姓名"></input></div>
+      <div class="text_item"><div class="input_text">创建人电话：</div><input class="edit_input" bindinput="setTel" placeholder="请填写您的联系电话"></input></div>
+      <div class="text_item pl-10">活动展示图：</div>
+       <view class="imgsBox" style='padding:0 30rpx;flex-wrap:wrap;'>
                   <view class='uploadimgbox' wx:for="{{imageurl}}" wx:key="item">
                       <image class='uploadimg' src='{{item}}' data-presrc="{{item}}" bindtap='previewImg' mode='aspectFill'></image>
                       <cover-view class='progress' wx:if="{{uploadProgress}}">
@@ -54,12 +51,24 @@
                       <image class='uploadbtn' bindtap='uploadImg' src='../../images/activity_photo.png'></image>
                   </view>
             </view>
-
-    
-
+      
     <view  class="addConent">
         <textarea class="content_text"  placeholder="活动描述" maxlength="1000" bindinput="setContent"  value="" name="content"/>
     </view>
+      
+      <div class="text_item"><div class="input_text">主办人微信：</div><button class="wx_btn" bindtap='chooseImageTap' data-cur="1">上传微信图片</button></div>
+      <view class="wxqueue_show"><image src='{{wxqueue}}' class="wxqueue" data-presrc="{{wxqueue}}" bindtap='previewImg'></image></view>
+      <div class="text_item"><view class="input_text">主办人小组：</view><button class="wx_btn" bindtap='chooseImageTap' data-cur="2">上传小组图</button></div>
+      <view class="wxqueue_show"><image src='{{wxgroup}}' class="wxgroup" data-presrc="{{wxgroup}}" bindtap='previewImg'></image></view>
+     
+
+    </div>
+
+     
+
+    
+
+
     <button class="writeSub" bindtap='saveFiles'>发布</button>
  
   

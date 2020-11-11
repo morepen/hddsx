@@ -5,6 +5,7 @@ const app = getApp();
 
 Page({
     data: {
+      title:'活动大师兄',
       imgUrl: [
         { url: "../../images/tab/1.png" },
         { url: "../../images/tab/1.png" },
@@ -14,8 +15,9 @@ Page({
       autoplay: true,
       interval: 4000,
       duration: 1000,
-      hosturl: app.globalData.url+"/",
-      coverList:[]
+      coverList:[],
+      WaysList:[],
+      hosturl:app.globalData.url
     },
     onPullDownRefresh() {
       
@@ -33,20 +35,46 @@ Page({
     onLoad: function (options) {
       this.getCoverList("1");
       this.getList("9");
+      this.getWays("11");
+      var that=this;
+      app.getOpenid().then(function (res) {
+        if (res.statusCode == 200) {
+          var openid = wx.getStorageSync('openid');
+          app.globalData.openid = wx.getStorageSync('openid');
+          that.checkUser(openid);
+        }
+        else {
+          //console.log(res.data);
+        }
+      })
      
     },
-    onShareAppMessage: function () {
-      return {
-        title: '犀牛旅行',
-        path: '/page/user?id=123',
-        success: function (res) {
-          // 分享成功
+    checkUser: function (openid) {
+      var that = this;
+      wx.showLoading({
+        title: '加载中...',
+        mask: true
+      })
+  
+      wx.request({
+        url: app.globalData.url + '/wx/checkUser',
+        data: {
+          openid: openid,
+          tel: wx.getStorageSync('tel'),
+          nickname: wx.getStorageSync('nickname')
         },
-        fail: function (res) {
-          // 分享失败
+        header: {
+          'content-type': 'application/json' // 默认值
+        },
+        success: function (res) {
+          
+          wx.hideLoading();
+          if (res.data.code == 200) {
+           
+          }
         }
-      }
-    },
+       })
+      },
   getList: function (developid){
       var that = this;
       wx.showLoading({
@@ -66,20 +94,58 @@ Page({
         },
         success: function (res) {
           wx.hideLoading();
-          console.log(res.data);
           if (res.data.code == 200) {
             var res_Arr = res.data.data;
             for (var i = 0; i < res_Arr.length; i++){
-              res_Arr[i].pics = app.globalData.url+"/upload/" + JSON.parse(res_Arr[i].pics)[0];
-              //res_Arr[i].starttime = time.formatTime(res_Arr[i].starttime * 1, 'Y-M-D'); 
+              //res_Arr[i].pics = app.globalData.hosturl+"/nginxImage/" + JSON.parse(res_Arr[i].pics)[0];
+              res_Arr[i].pics = app.globalData.hosturl+"/nginxImage/" + JSON.parse(res_Arr[i].pics)[0];
+              var tomorrow = new Date().getTime() + 24*60*60*1000;
+              var _tomorrow=time.formatTime(tomorrow * 1, 'Y-M-D'); 
+              var _time=res_Arr[i].starttime=='群内确定'?_tomorrow:res_Arr[i].starttime;
+              res_Arr[i].starttime = _time
               if (res_Arr[i].money==0||res_Arr[i].money==null){
                 res_Arr[i].money="免费"
               }else{
-                res_Arr[i].money = "付费活动:¥" + res_Arr[i].money+"元";
+                res_Arr[i].money = "活动费用:¥" + res_Arr[i].money+"元/"+ res_Arr[i].cell;
               }
             }
             that.setData({
               articleList: res_Arr
+            })
+
+          } else {
+
+          }
+
+        }
+      })
+    },
+  getWays: function (developid){
+      var that = this;
+      wx.showLoading({
+        title: '加载中...',
+        mask: true
+      })
+      
+      wx.request({
+        url: app.globalData.url + '/public/ArticleDevelopList',
+        data: {
+          developid: developid,
+          typevalue:"0"
+
+        },
+        header: {
+          'content-type': 'application/json' // 默认值
+        },
+        success: function (res) {
+          wx.hideLoading();
+          if (res.data.code == 200) {
+            var res_Arr = res.data.data;
+            for (var i = 0; i < res_Arr.length; i++) {
+              res_Arr[i]["createtime"] = time.formatTime(parseInt(res_Arr[i]["createtime"]), 'Y-M-D');
+            }
+            that.setData({
+              WaysList: res_Arr
             })
 
           } else {
@@ -132,6 +198,13 @@ Page({
 
 
     },
+    moreWays: function () {
+    
+
+      wx.navigateTo({
+        url: '../ways/index'
+      })
+    },
   toLeftTab: function (event) {
     var cur_item = event.currentTarget.dataset.cur;
 
@@ -167,11 +240,30 @@ Page({
       url: '../wxabout/index'
     })
   },
+  toMap: function () {
+  
+
+    wx.navigateTo({
+      url: '../card/index'
+    })
+  },
+  toCard: function () {
+    wx.navigateTo({
+      url: '../webview/index?type=2'
+    })
+  },
   toDetail: function (event) {
  
     var cur_item = event.currentTarget.dataset.cur;
     wx.navigateTo({
       url: '../detail/detail?id=' + cur_item
+    })
+  },
+  toWays: function (event) {
+  
+    var cur_item = event.currentTarget.dataset.cur;
+    wx.navigateTo({
+      url: '../ways/detail?id=' + cur_item
     })
   },
     /**
@@ -251,4 +343,23 @@ Page({
       })
 
     },
+    onShareAppMessage: function () {
+      return {
+        title: '活动大师兄',
+        path: 'pages/index/index',
+        success: function (res) {
+          // 分享成功
+        },
+        fail: function (res) {
+          // 分享失败
+        }
+      }
+    },
+    onShareTimeline: () => {
+      return {
+        title: "活动大师兄",
+        query: "",
+        imageUrl: "https://www.sxbbt.net/qrcode/hddsx.jpg"
+      }
+    }
 })

@@ -4,7 +4,7 @@ const app = getApp();
 Page({
 
   data: {
-    title:'',
+    title:'活动发布',
     address:'',
     people:'10',
     money:'',
@@ -26,19 +26,128 @@ Page({
     typeArray:["户外","亲子","读书","健身"],
     typeresult:"请选择",
     typevalue:'-1',
-    dsxArray:["大师兄_段茂","大师兄_现代田园"],
+    dsxArray:[],
     dsxresult:"请选择",
-    dsxvalue:'-1'
+    dsxvalue:'-1',
+    wxqueue: [],//本地图片地址数组
+    wxgroup: [],//本地图片地址数组
+    queuePaths:'',
+    groupPaths:''
   },
 
   onLoad(options) {
+    
 
-  
+    this.getList();
   
 
   },
   onShow() {
 
+  },
+  getList: function (){
+    var that = this;
+    wx.showLoading({
+      title: '加载中...',
+      mask: true
+    })
+    
+    wx.request({
+      url: app.globalData.url + '/public/getLeader',
+      data: {},
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function (res) {
+        wx.hideLoading();
+        console.log(res.data);
+        if (res.data.code == 200) {
+          var _arr=[];
+          var res_Arr = res.data.data;
+          for (var i = 0; i < res_Arr.length; i++){
+            _arr.push(res_Arr[i].name);
+          }
+          that.setData({
+            dsxArray:_arr
+          })
+        }
+      }
+    })
+  },
+   //添加上传图片
+   chooseImageTap: function (event) {
+    var way = event.currentTarget.dataset.cur;
+    var that = this;
+    wx.showActionSheet({
+      itemList: ['从相册中选择', '拍照'],
+      itemColor: "#00000",
+      success: function (res) {
+        if (!res.cancel) {
+          if (res.tapIndex == 0) {
+            that.chooseWxImage('album',way)
+          } else if (res.tapIndex == 1) {
+            that.chooseWxImage('camera',way)
+          }
+        }
+      }
+    })
+  },
+  // 图片本地路径
+  
+  chooseWxImage: function (type,way) {
+    debugger;
+    var that = this;
+    var imgsPaths = that.data.imgs;
+    wx.chooseImage({
+      sizeType: ['original', 'compressed'],
+      sourceType: [type],
+      success: function (res) {
+        console.log(res.tempFilePaths[0]);
+        if(way==1){
+          that.setData({
+            wxqueue: res.tempFilePaths[0]
+          })
+        }else if(way==2){
+          that.setData({
+            wxgroup: res.tempFilePaths[0]
+          })
+        }
+       
+        that.upImgs(res.tempFilePaths[0], 0,way) //调用上传方法
+      }
+    }) 
+  },
+  //上传服务器
+  upImgs: function (imgurl, index,way) {
+    var that = this;
+
+  
+    wx.uploadFile({
+      url: app.globalData.url + '/public/wxPicUpLoad',
+      filePath: imgurl,
+      name: 'file',
+      formData: {
+        file: 'file',
+        uniqueid: app.globalData.openid?app.globalData.openid:'yk'
+      },
+      success: function (res) {
+        debugger;
+        console.log(res) //接口返回网络路径
+        var data = JSON.parse(res.data)
+          if(way==1){
+            that.setData({
+              queuePaths:data.data
+            })
+          }else if(way==2){
+            that.setData({
+              groupPaths:data.data
+            })
+          }
+          
+          console.log(that.data.picPaths)
+          debugger;
+      }
+    })
   },
   bindDateChange1: function (e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
@@ -66,7 +175,7 @@ Page({
   bindPickerChange4: function (e) {
    
     console.log('picker发送选择改变，携带值为', e.detail.value)
-
+    debugger;
     
     this.setData({
       dsxvalue: e.detail.value,
@@ -204,10 +313,14 @@ Page({
       return true;
     }
   },
-
-  // 提交评价  next
   saveFiles() {
     var that=this;
+    var openid = wx.getStorageSync('openid');
+    if (openid==''){
+      wx.navigateTo({
+        url: '../usercenter/usercenter'
+      })
+    }
     if (this.data.title == null || this.data.title == undefined || this.data.title == '') {
       wx.showModal({
         content: "标题不能为空",
@@ -231,7 +344,13 @@ Page({
       })
       return false;
     } 
-   
+    if (this.data.dsxvalue == "-1") {
+      wx.showModal({
+        content: "请至少选择一名活动会计参与活动",
+        showCancel: false
+      })
+      return false;
+    } 
 
     if (this.data.username == null || this.data.username == undefined || this.data.username == '') {
       wx.showModal({
@@ -264,13 +383,22 @@ Page({
       })
       return false;
     } 
-    if (this.data.dsxvalue == "-1") {
+    
+
+    if(this.data.queuePaths==''){
       wx.showModal({
-        content: "请至少选择一名大师兄参与组建活动",
+        content: "主办人微信图片还未上传",
         showCancel: false
       })
       return false;
-    } 
+    }
+    if(this.data.groupPaths==''){
+      wx.showModal({
+        content: "活动小组图片还未上传",
+        showCancel: false
+      })
+      return false;
+    }
     
           this.setData({
             uploadProgress: false,
@@ -293,7 +421,11 @@ Page({
               typeresult:this.data.typeresult,
               typevalue:this.data.typevalue,
               dsxresult:this.data.dsxresult,
-              dsxvalue:this.data.dsxvalue
+              dsxvalue:this.data.dsxvalue,
+              queuePaths:this.data.queuePaths,
+              groupPaths:this.data.groupPaths,
+              openid:openid
+
             },
             header: {
               'content-type': 'application/json' // 默认值
@@ -307,6 +439,9 @@ Page({
                   content: '发布成功',
                   showCancel: false
                 })
+                var pages = getCurrentPages();
+                var beforePage = pages[pages.length - 2];
+                beforePage.initData();
                 wx.navigateBack({
                   delta: 1
                 })
@@ -336,6 +471,25 @@ Page({
       hasUserInfo: true
     })
   },
+  onShareAppMessage: function () {
+    return {
+      title: '活动大师兄',
+      path: 'pages/write/index',
+      success: function (res) {
+        // 分享成功
+      },
+      fail: function (res) {
+        // 分享失败
+      }
+    }
+  },
+  onShareTimeline: () => {
+    return {
+      title: "活动大师兄-"+this.data.title,
+      query: "",
+      imageUrl: "https://www.sxbbt.net/qrcode/hddsx.jpg"
+    }
+  }
 
 
 })

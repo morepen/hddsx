@@ -1,0 +1,24 @@
+<scroll-view scroll-y="true" class="contain_detail_cnt" style="height:{{winHeight - 40}}px;">
+
+	<!-- 内容 -->
+	<view class="content" scroll-y="true">
+     <view class="ways_title">{{article.title}}</view>
+     <view class="ways_intro"><span class="author">{{article.author}}</span>{{article.createtime}}</view>
+     <view class="ways_content"><rich-text nodes="{{article.content}}"></rich-text></view>
+     
+    
+
+
+	</view>
+
+
+
+
+
+
+
+</scroll-view>
+
+
+
+

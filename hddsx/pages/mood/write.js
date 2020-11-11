@@ -4,7 +4,8 @@ const app = getApp();
 Page({
 
   data: {
-    title:'',
+
+    title:'发布精彩瞬间',
     content:'',
     uploadBtn: true,     //上传数量 >= maxUploadLen  控制 添加按钮 显示隐藏
     uploadProgress: false,   //上传进度显示隐藏
@@ -180,16 +181,25 @@ Page({
               wx.hideLoading();
               console.log(result);
               if (result.statusCode == 200) {
+
+                //wx.showToast({
+                  //title: '内容已提交审核中，审核通过后可见！',
+                  //icon: 'succes',
+                  //duration: 4000,
+                  //mask: true
+                //})
+
                 wx.showModal({
                   content: '发布成功',
                   showCancel: false
                 })
-                // wx.navigateTo({
-                //   url: '/pages/desklist/desklist'
-                // })
+                var pages = getCurrentPages();
+                var beforePage = pages[pages.length - 2];
+                beforePage.initData();
                 wx.navigateBack({
                   delta: 1
                 })
+          
 
               }
               else {
@@ -217,6 +227,25 @@ Page({
       hasUserInfo: true
     })
   },
+  onShareAppMessage: function () {
+    return {
+      title: '活动大师兄',
+      path: 'pages/mood/write',
+      success: function (res) {
+        // 分享成功
+      },
+      fail: function (res) {
+        // 分享失败
+      }
+    }
+  },
+  onShareTimeline: () => {
+    return {
+      title: "活动大师兄-"+this.data.title,
+      query: "",
+      imageUrl: "https://www.sxbbt.net/qrcode/hddsx.jpg"
+    }
+  }
 
 
 })

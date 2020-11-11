@@ -2,7 +2,6 @@
 <import src="../../pages/wxParse/wxParse.wxml"/>  
 	<!-- 内容 -->
 	<view class="content" scroll-y="true">
-    
     <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
         <block wx:for="{{imgUrl}}" wx:key="index">
             <swiper-item>
@@ -17,27 +16,56 @@
       <div class="content_text">
        <rich-text nodes="{{article.content}}"></rich-text>
       </div>
+      <div class="add_group" bindtap="toGroup">加入小组</div>
     </div>
     <div class="rlue_item">
-      <div class="text_item"><cover-image wx:if="{{isshade==false}}" class="text_icon" src="../../images/tab/1.png"></cover-image>开始时间：{{article.starttime}}</div>
-      <div class="text_item"><cover-image wx:if="{{isshade==false}}" class="text_icon" src="../../images/tab/2.png"></cover-image>结束时间：{{article.endtime}}</div>
-      <div class="text_item"><cover-image wx:if="{{isshade==false}}" class="text_icon" src="../../images/tab/3.png"></cover-image>活动地点：{{article.address}}</div>
-      <div class="text_item"><cover-image wx:if="{{isshade==false}}" class="text_icon" src="../../images/tab/4.png"></cover-image>联系方式：{{article.contactname}}/{{article.contacttel}}</div>
+      <div class="text_item"><image wx:if="{{isicon}}" class="text_icon" src="../../images/tab/1.png"></image>开始时间：{{article.starttime}}</div>
+      <div class="text_item"><image wx:if="{{isicon}}" class="text_icon" src="../../images/tab/2.png"></image>结束时间：{{article.endtime}}</div>
+      <div class="text_item"><image wx:if="{{isicon}}" class="text_icon" src="../../images/tab/3.png"></image>活动地点：{{article.address}}</div>
+      <div class="text_item"><image wx:if="{{isicon}}" class="text_icon" src="../../images/tab/my1.png"></image>师兄昵称：{{article.contactname}}</div>
+      <div class="text_item"><image wx:if="{{isicon}}" class="text_icon" src="../../images/tab/4.png"></image>师兄电话：{{article.contacttel}}</div>
+      <div class="text_item"><image wx:if="{{isicon}}" class="text_icon"  src="../../images/tab/wx.png"></image>师兄微信：<image bindtap="previewImage1" data-cur="{{wxqueue}}" class="wxadmin" src="{{wxqueue}}" ></image></div>
+
+
      </div>
 
-      <div class="goadd"><div class="money"><span class="money_text">活动费用:{{article.money}}元</span></div><div class="add" bindtap="toBook">填写报名信息</div></div>
+      <div class="goadd"><div class="money"><span class="money_text">活动费用:{{article.money}}元</span></div><div class="add_wrap"><button class="add"  open-type="getUserInfo" bindgetuserinfo="toGotUserInfo" bindtap="toBook">填写报名信息</button></div></div>
 
       <div class="shadow" wx:if="{{isshade}}">
         <div class="edit_add">
           <div class="edit_head">请填写以下信息，方便活动核实</div>
-           <input class="edit_input" placeholder="请填写您的姓名" bindinput="setUsername"></input>
-           <input class="edit_input" placeholder="请填写您的电话" bindinput="setTel"></input>
-           <div><div class="btn" bindtap="AddBook">提交并支付活动费用<span class="money_num">¥{{article.money}}元</span></div></div>
+           <input class="edit_input" placeholder="请填写您的姓名" value="{{nickname}}" bindinput="setUsername"></input>
+           <input class="edit_input" placeholder="请填写您的电话" value="{{tel}}" bindinput="setTel"></input>
+           <div style="display:none"><div class="btn_pay" bindtap="PayBook">提交并支付活动费用<span class="money_num">¥{{article.money}}元</span></div></div> 
+           <div><div class="btn_pay" bindtap="PayBook">预约报名</div></div>
+           <div><div class="btn_share"  bindtap="toShowHb">生成入场码</div></div>          
            <cover-image class="close" src="../../images/close.png" bindtap="closeBook" wx:if="{{isshade}}"></cover-image>
         </div>
-      
-      
       </div>
+
+       <div class="shadow" wx:if="{{isshade1}}">
+        <div class="edit_add1">
+            <div class="wxpic_wrap"><cover-image bindtap="previewImage" data-cur="{{imgPath}}" class="wxpic" src="{{imgPath}}" ></cover-image></div>
+          
+           <image class="close"  src="../../images/close.png" bindtap="closeGroup"></image>
+        </div>
+      </div>
+
+
+
+      <div class="shadow" wx:if="{{isshade2}}">
+        <div class="edit_add2">
+          <div class="pay_head">活动费用支付方式<cover-image class="close" src="../../images/close.png" bindtap="closeShade2" wx:if="{{isshade2}}"></cover-image></div>
+          <div class="payway_wrap">
+           <div bindtap="JfBook" class="payway">积分预支付</div> 
+           <div bindtap="wxBook" class="payway">微信支付</div>   
+          </div>       
+           
+        </div>
+      </div>
+
+
+
 	</view>
 
 
@@ -47,6 +75,18 @@
 
 
 </scroll-view>
+    <!--生成海报  -->
+<view class="img-box" hidden="{{ishb == true}}">
+    <view class='imagePathBox' hidden="{{maskHidden == false}}">
+      <image src="{{imagePath}}" class='shengcheng'></image>
+      <button class='baocun' bindtap='baocun'>保存相册</button>
+      <button class='baocun1' bindtap='toHideHb'>取消</button>
+    </view>
+   <view hidden="{{maskHidden == false}}" class="mask"></view> 
+  <view class="canvas-box">
+      <canvas  style="width: 375px;height: 667px;position:fixed;top:9999px" canvas-id="mycanvas"/>
+  </view> 
+</view>
 
 
 

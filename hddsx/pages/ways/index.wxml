@@ -1,0 +1,11 @@
+
+
+<view class="themes-list-box article_box" wx:for="{{WaysList}}"  wx:key="key" bindtap="toWays" data-cur="{{item.id}}">
+        <cover-image class="article_img" src="{{item.coverimage}}"></cover-image>
+        <div class="article_list" >
+             <div class="item_title">{{item.title}}</div>
+             <div class="waystime">发布时间:{{item.createtime}}</div>
+             <div>{{item.money}}</div>
+        </div>    
+</view>
+

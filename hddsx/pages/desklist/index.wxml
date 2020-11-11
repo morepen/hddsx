@@ -4,21 +4,13 @@
 
 <view class="item-box">
 
-   <div wx:for="{{list}}" wx:key="{{index}}" bindtap="toLife" data-cur="{{item.id}}" class="card_item_wrap">
-
- 
-    <div class="desk_btn_wrap"><div class="desk_btn">{{item.sorttitle}}</div></div>
-
-  
-      
-      
-        <cover-image class="wx_img" src="{{pichost+item.image}}"></cover-image>
-   
-     
+   <view class="themes-list-box article_box" wx:for="{{articleList}}" bindtap="toLife" data-cur="{{item.id}}">
+        <cover-image class="article_img" src="{{picurl+item.pics}}"></cover-image>
+        <div class="detail_btn" >
+             进入俱乐部
+        </div>
         
-   
-    
-    </div>
+</view>
 </view>
 
 

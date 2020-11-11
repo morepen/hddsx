@@ -1,0 +1,21 @@
+
+
+<view>
+<view class="head_wap">
+  <view class="{{curHdIndex=='0'? 'active' : 'bookhead'}}"  data-id="0" bindtap="toList">我创建</view>  
+  <view class="{{curHdIndex=='1'? 'active' : 'bookhead'}}"  data-id="1" bindtap="toList">已购买</view>  
+  <view class="{{curHdIndex=='2'? 'active' : 'bookhead'}}"  data-id="2" bindtap="toList">退订中</view>  
+  <view class="{{curHdIndex=='3'? 'active' : 'bookhead'}}"  data-id="3" bindtap="toList">已退订</view>  
+
+</view>
+<view class="no_record" wx:if="{{no_record}}">暂无活动<span class="go_hd"  bindtap="toCreate">去创建</span></view>
+<view class="themes-list-box article_box" wx:for="{{articleList}}"  wx:key="key" bindtap="toDetail" data-cur="{{item.id}}">
+        <view class="{{item.paytype==2 ? 'wxpay':'jfpay'}}" wx:if="{{curHdIndex!='0'}}">{{item.paytype==2?'已微信支付':'已积分支付'}}</view>
+        <cover-image class="article_img" src="{{item.pics}}"></cover-image>
+        <div class="article_list" >
+             <div class="item_title">{{item.title}}</div>
+             <div>Time:{{item.starttime}}</div>
+             <div>{{item.money}}</div>
+        </div>    
+</view>
+</view>

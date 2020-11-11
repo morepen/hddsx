@@ -4,6 +4,7 @@ const time = require("../../utils/time.js");
 
 Page({
   data: {
+    title:'活动评论',
     logs: [],
     tagArr:[],
     cur_item:{},
@@ -17,15 +18,19 @@ Page({
     isShow1: true,
     pichost: app.globalData.url+'/upload/images/',
     defaultavatarUrl:'../../images/default.jpg',
+    _nickname:wx.getStorageSync('nickname')
   },
   onLoad: function (options) {
 
 
     var that = this;
-    var cardid
+    var cardid;
+
     that.setData({
-      cardid: options.cur_item
+      cardid: options.id
     })
+    
+    wx.setStorageSync('commentid',options.id);
     wx.showLoading({
       title: '加载中...',
       mask: true
@@ -33,15 +38,16 @@ Page({
     wx.request({
       url: app.globalData.url + '/public/GetCardComment',
       data: {
-        cardid:that.data.cardid,
-        openid: app.globalData.openid
+        cardid:that.data.cardid
       },
       header: {
         'content-type': 'application/json' // 默认值
       },
       success: function (res) {
+        
         wx.hideLoading();
         if (res.data.code == 200) {
+          
           if (res.data.data.comenttwo.length>0){
             var list_arr = res.data.data.comenttwo;
             that.setData({
@@ -54,12 +60,22 @@ Page({
             }
 
           }
+          var imagelist = JSON.parse(res.data.data.comentone[0].piclist);
+
+          var imgArr = [];
+          for (var i = 0; i < imagelist.length; i++) {
+
+            var _img = app.globalData.hosturl + "/nginxImage/images/" + imagelist[i];
+            imgArr.push(_img);
+          }
+          
           that.setData({
             cur_item: res.data.data.comentone[0],
-            piclist:JSON.parse(res.data.data.comentone[0].piclist),
+            piclist: imgArr,
             cardtime: time.formatTime(parseInt(res.data.data.comentone[0].createtime),'Y-M-D h:m:s'),
             commentlist: list_arr 
           });
+          wx.setStorageSync('commenttitle',res.data.data.comentone[0].content);
         } else {
 
         }
@@ -75,7 +91,6 @@ Page({
   },
   setContent:function (e) {
       this.data.content = e.detail.value;
-    console.log(this.data.content);
   },
 
   createComment:function(){
@@ -84,13 +99,32 @@ Page({
       title: '加载中...',
       mask: true
     })
+    
+    var _nickname=wx.getStorageSync('nickname');
+    if(_nickname==''){
+      wx.navigateTo({
+        url: '../usercenter/usercenter'
+      })
+    }else{
 
+
+
+    if (this.data.content == null || this.data.content == undefined || this.data.content == '') {
+      wx.showModal({
+        content: "评论内容不能为空",
+        showCancel: false
+      })
+      return false;
+    } 
+    var _openid = wx.getStorageSync('openid');
+    var _nickname = wx.getStorageSync('nickname');
     wx.request({
       url: app.globalData.url + '/public/createCardComment',
       data: {
         cardid:that.data.cardid,
         content:that.data.content,
-        nickName: app.globalData.userInfo.nickName,
+        nickName: _nickname != '' ? _nickname:'匿名用户',
+        openid: _openid,
         avatarUrl: app.globalData.userInfo.avatarUrl
       },
       header: {
@@ -99,15 +133,21 @@ Page({
       success: function (res) {
         wx.hideLoading();
         
-
+     
 
         if (res.data.code == 200) {
 
-
+         
+          wx.showToast({
+            title: '评论已提交审核，通过后可见！',
+            icon: 'succes',
+            duration: 1000,
+            mask: true
+          })
 
           var cur_item={
             content:that.data.content,
-            nickName: app.globalData.userInfo.nickName,
+            nickName: _nickname,
             avatarUrl: app.globalData.userInfo.avatarUrl,
             createtime:"刚刚"
           }
@@ -119,15 +159,13 @@ Page({
           that.setData({
             content: ""  
           });
-          debugger;
+          
+          wx.navigateBack({
+            delta: 1
+          })
 
 
-          wx.showToast({
-            title: '成功',
-            icon: 'succes',
-            duration: 1000,
-            mask:true
-           })
+          
 
         } else { 
           wx.showToast({
@@ -138,11 +176,36 @@ Page({
            })
 
         }
+        
       }
     })
 
 
-    
+   }
+  },
+  onShareAppMessage: function () {
+    var _id=wx.getStorageSync('commentid');
+    return {
+      title: '活动大师兄',
+      path: 'pages/life/comment?id='+_id,
+      success: function (res) {
+        // 分享成功
+      },
+      fail: function (res) {
+        // 分享失败
+      }
+    }
+  },
+  onShareTimeline: () => {
+
+    var _title=wx.getStorageSync('commenttitle');
+    var _id=wx.getStorageSync('commentid');
+    debugger;
+    return {
+      title:"[评论]"+_title,
+      query: "id="+_id,
+      imageUrl: "https://www.sxbbt.net/qrcode/hddsx.jpg"
+    }
   }
  
 

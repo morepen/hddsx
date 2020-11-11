@@ -1,0 +1,21 @@
+.ways_content{
+  padding:10px 16px;
+}
+.ways_content img{
+  width:200px;
+}
+.ways_title{
+  color:#333;
+  font-size:16px;
+  line-height:36px;
+  padding-top:16px;
+  padding-left:5px;
+  font-weight:bold;
+  text-indent:10px;
+}
+.author{
+  color:rgb(158, 152, 152);
+  font-size: 14px;
+  padding-left:20px;
+  padding-right:10px;
+}

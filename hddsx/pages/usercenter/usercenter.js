@@ -9,16 +9,171 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userInfo: {}
+    userInfo: {
+      avatarUrl:'../../images/nologn.png',
+      nickName:'未登录'
+    },
+    isqrcode:false,
+    money:'--',
+    ismore:false,
+    isqr:false,
+    showTel:false,
+    tel:wx.getStorageSync('tel')
+  },
+  tolink: function () {
+    wx.navigateTo({
+      url: '../weixinlink/weixinlink'
+      //  url: '../logs/logs'
+    })
   },
   toLife: function (event) {
     wx.navigateTo({
-      url: '../life/life'
+      url: '../booklist/index'
+    })
+  },
+  showlogn:function(){
+    var _nickname = wx.getStorageSync('nickname');
+    if (_nickname=='') {
+      this.setData({
+        showAuthorizeStatus:true
+      })
+    }
+  },
+  qxlogn:function(){
+    this.setData({
+      showAuthorizeStatus:false
+    })
+  },
+  showtel:function(){
+    this.setData({
+      showTel:true
+    })
+  },
+  qxtel: function () {
+    this.setData({
+      showTel: false
+    })
+  },
+  showQrcode:function(){
+    var _nickname = wx.getStorageSync('nickname');
+    debugger;
+    if (_nickname){
+      this.setData({
+        isqr: !this.data.isqr
+      })
+    }else{
+      wx.showToast({
+        title: "未登录，请先登录！",
+        icon: 'none',
+      })
+      return false
+    }
+   
+  },
+  getPhoneNumber: function (e) {//这个事件同样需要拿到e
+    var that = this
+    var ency = e.detail.encryptedData;
+    var iv = e.detail.iv;
+    var errMsg = e.detail.errMsg
+    if (iv == null || ency == null) {
+      wx.showToast({
+        title: "授权失败,请重新授权！",
+        icon: 'none',
+      })
+      return false
+    }
+
+    //把获取手机号需要的参数取到，然后存到头部data里面
+    that.setData({
+      ency: ency,
+      iv: iv,
+      errMsg: errMsg
+    })
+
+    that.getTel();//调用手机号授权事件
+  },
+  getTel: function () {
+    var url = app.globalData.url + '/wx/decryptData';
+    var that = this;
+    wx.request({
+      url: url,
+      data: {
+        encryptedData: that.data.ency,
+        iv: that.data.iv,
+        sessionkey: wx.getStorageSync('session_key')
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function (res) {
+       
+        if (res.data.code == 200) {
+
+          var _result = JSON.parse(res.data.data);
+          wx.setStorageSync('tel', _result.phoneNumber);
+          that.setData({
+            tel: _result.phoneNumber,
+            countryCode: _result.countryCode,
+            showTel: false
+          })
+
+          wx.navigateBack({
+            delta: 1
+          })
+
+
+
+        }
+      }
+    });
+  },
+  getUser: function (openid) {
+    var that = this;
+    wx.request({
+      url: app.globalData.url + '/wx/getuser',
+      data: {
+        openid: openid
+
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function (res) {
+
+       
+        if (res.data.code == 200) {
+          that.setData({
+            money: res.data.data[0].money,
+            qrcode: app.globalData.hosturl + "/nginxImage/" + res.data.data[0].qrcode,
+          })
+        }
+      }
+    })
+  },
+  previewImage1: function (e) {
+    var that = this;
+    var src = that.data.qrcode;//获取data-src
+    var imgList = [that.data.qrcode];//获取data-list
+    //图片预览
+    wx.previewImage({
+      current: src, // 当前显示图片的http链接
+      urls: imgList // 需要预览的图片http链接列表
+    })
+
+  },
+  toLife: function (event) {
+    wx.navigateTo({
+      url: '../booklist/index'
+    })
+  },
+  toLeftTab: function (event) {
+    wx.navigateTo({
+      url: '../leftTab/index'
     })
   },
   toCard: function (event) {
     wx.navigateTo({
-      url: '../card/index'
+      url: '../cardlist/index'
     })
   },
   closeBomb: function () {//协议弹框关闭按钮
@@ -57,6 +212,9 @@ Page({
     // })
   },
   toWxAbout: function () {
+
+    
+
     wx.navigateTo({
       url: '../wxabout/index'
     })
@@ -70,6 +228,8 @@ Page({
       });
       app.globalData.userInfo = e.detail.userInfo;
       console.log("toGotUserInfo" + app.globalData.userInfo);
+     
+      wx.setStorageSync('nickname', e.detail.userInfo.nickName);
       var inviteCode = '';
       try {
         var inviteCode = self.data.inviteCode
@@ -141,20 +301,22 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo
-      })
-    } else if (this.data.canIUse) {
+   var that=this;
+   if (this.data.canIUse) {
+      
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
       app.userInfoReadyCallback = res => {
         this.setData({
           userInfo: res.userInfo
         })
+        wx.setStorageSync('nickname', userInfo.nickName);
+        that.checkTel();
+        that.showUse();
+
       }
     } else {
+      
       // 在没有 open-type=getUserInfo 版本的兼容处理
       wx.getUserInfo({
         success: res => {
@@ -162,51 +324,43 @@ Page({
           this.setData({
             userInfo: res.userInfo
           })
+          wx.setStorageSync('nickname', res.userInfo.nickName);
+          that.checkTel();
+          that.showUse();
         }
       })
     }
 
     var self = this;
-    //请求收货地址列表数据
-    // wx.request({
-    //   url: app.globalData.service + '/api/personal/init',
-    //   method: 'POST',
-    //   data: {
-    //     userToken: app.globalData.userToken
-    //   },
-    //   success: function (res) {
-    //     //console.log(res);
-    //     var data = res.data;
-    //     if (data.code == 0) {
-    //       //设置收货地址列表数据
-    //       //self.data.indexImg = data.result;
-    //       if (data.result) {
-    //         var newUserVersion = data.result.newUserVersion;
-
-    //         self.setData({
-    //           servicePhone: data.result.servicePhone,
-    //           newUserVersion: newUserVersion
-    //         });
-
-    //         //判断邀请红点是否出现
-    //         if (newUserVersion > app.globalData.userVersion) {
-    //           self.setData({
-    //             inviteDot: true
-    //           });
-    //         } else {
-    //           self.setData({
-    //             inviteDot: false
-    //           });
-    //         }
-    //       }
-    //     }
-    //     else {
-    //       // alert(res.data.msg);
-    //     }
-    //   }
-    // })
-
     util.checkUserInfoAuth();
+    
+ 
+
+  },
+  checkTel:function(){
+    var _tel = wx.getStorageSync('tel');
+    if(_tel==''){
+      this.setData({
+        showTel:true
+      })
+    }else{
+      this.setData({
+        showTel:false
+      })
+    }
+  },
+  showUse:function(){
+    var that = this;
+    app.getOpenid().then(function (res) {
+      if (res.statusCode == 200) {
+        app.globalData.openid = wx.getStorageSync('openid');
+        var openid = wx.getStorageSync('openid');
+        that.getUser(openid);
+      }
+      else {
+        console.log(res.data);
+      }
+    })
   },
   exit:function(){
     app.globalData.userInfo={};

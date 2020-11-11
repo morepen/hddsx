@@ -89,7 +89,7 @@ var upFilesFun = (t, data, progress, success) => {
     return;
   }
  
-
+   
  
   const uploadTask = wx.uploadFile({
     url: app.globalData.url + '/public/handlepic',

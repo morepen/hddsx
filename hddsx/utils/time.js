@@ -27,9 +27,45 @@ function formatTime(timestamp, format) {
     format = format.replace(formateArr[i], returnArr[i]);
   }
   return format;
-
 }
-
+function onetime(){
+        var date=new Date();
+        var year=date.getFullYear(); 
+        var mon=date.getMonth()+1;
+        var day=date.getDate();
+        var h=date.getHours(); 
+        var m=date.getMinutes();
+        var s=date.getSeconds(); 
+        var submitTime = "";
+        submitTime += year;
+        if(mon >= 10) {
+          submitTime += mon;
+        }else {
+          submitTime += "0" + mon;
+        }
+        if(day >= 10) {
+          submitTime += day;
+        }else {
+          submitTime += "0" + day;
+        }
+        if(h >= 10) {
+          submitTime += h;
+        }else {
+          submitTime += "0" + h;
+        }
+        if(m >= 10) {
+          submitTime += m;
+        }else {
+          submitTime += "0" + m;
+        }
+        if(s >= 10) {
+          submitTime += s;
+        }else {
+          submitTime += "0" + s;
+        }
+        return submitTime;
+}
 module.exports = {
-  　　formatTime: formatTime
+  　　formatTime: formatTime,
+      onetime:onetime
 }

@@ -3,7 +3,7 @@
 
 .add_title,.addConent{padding:8rpx 30rpx;color:#646464;background:#fff;}
 .add_title{border-bottom:1px solid #EAEAEA;height:88rpx;}
-.addConent textarea{width:100%;height:120rpx;}
+.addConent textarea{width:100%;height:200rpx;}
 .addConent{padding-top:30rpx;overflow:hidden;margin-bottom:30rpx;}
 label{color:#a0a0a0;padding-left:40rpx;}
 label text{padding-left:10rpx;}
@@ -204,6 +204,8 @@ button{width:400rpx;height:80rpx;line-height:80rpx;text-align:center;font-size:1
 .text_item{
   position:relative;
   width:100%; 
+  overflow:hidden;
+  display:block;
  
 }
 
@@ -213,10 +215,11 @@ button{width:400rpx;height:80rpx;line-height:80rpx;text-align:center;font-size:1
   color:#666666;
 }
 .input_text{
+
   position:absolute;
   top:0px;
   left:0px;
-  width:70px;
+  width:100px;
   padding-left:10px;
   padding-top:10px;
   padding-bottom:10px;
@@ -235,4 +238,29 @@ button{width:400rpx;height:80rpx;line-height:80rpx;text-align:center;font-size:1
 }
 .type_result{
     font-display:inline-block;
+}
+.pl-10{
+    padding-left:10px;
+}
+.wx_btn{
+    width:120px;
+    height:30px;
+    line-height:30px;
+ 
+}
+.wxqueue_show{
+    width:80%;
+    margin:0 auto;
+    border:1px dashed #dadada;
+    margin-bottom:10px;
+
+}
+.wxqueue{
+    width:100px;
+    height:100px;
+    margin:0 auto;
+    display: block;  
+}
+.wxgroup{
+    width:80%;
 }

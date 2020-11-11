@@ -15,19 +15,9 @@ const app = getApp();
 
 Page({
   data: {
-    showAuthorizeStatus: true,
-    logs: [],
-    tagArr: [],
-    groupArr: [],
-    groupname: '',
-    groupnum: 10,
-    isgroup: 0,
-    isshow: true,
-    deskid: '',
-    isroot: 1,
-    pichost: app.globalData.url,
-    currentItem:'',
-    list:[]
+    title:'往期回顾',
+    articleList:[],
+    picurl:app.globalData.hosturl
   },
   onLoad: function (options) {
    
@@ -36,41 +26,41 @@ Page({
 
   },
   onShow: function () {
-    var that = this;
-    that.getList();
+
+    this.getList("9");
    
    
   },
-  getList: function () {
+  getList: function (developid){
     var that = this;
     wx.showLoading({
       title: '加载中...',
       mask: true
     })
+    
     wx.request({
-      url: app.globalData.url + '/public/GetDeskList',
+      url: app.globalData.url + '/dsx/getClub',
       data: {
-        deskid: that.data.deskid,
-        openid: app.globalData.openid,
-        // openid: "o6y8j0SypTdpoj46qdEleESQ"
+        developid: developid,
+        typevalue:"-1"
 
       },
       header: {
         'content-type': 'application/json' // 默认值
       },
       success: function (res) {
-       
         wx.hideLoading();
         console.log(res.data);
         if (res.data.code == 200) {
-       
-         
-          
+          var res_Arr = res.data.data;
           that.setData({
-            list: res.data.data
-          });
-          
-        } else { }
+            articleList: res_Arr
+          })
+
+        } else {
+
+        }
+
       }
     })
   },
@@ -261,6 +251,25 @@ Page({
         }
       }
     })
+  },
+  onShareAppMessage: function () {
+    return {
+      title: '活动大师兄',
+      path: 'pages/desklist/index',
+      success: function (res) {
+        // 分享成功
+      },
+      fail: function (res) {
+        // 分享失败
+      }
+    }
+  },
+  onShareTimeline: () => {
+    return {
+      title: "活动大师兄-"+this.data.title,
+      query: "",
+      imageUrl: "https://www.sxbbt.net/qrcode/hddsx.jpg"
+    }
   }
 
 })

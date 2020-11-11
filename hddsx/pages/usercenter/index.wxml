@@ -1,0 +1,99 @@
+<view class='personal-top white-bg f34' bindtap="showlogn">
+  <image class='pers-img' src='{{userInfo.avatarUrl}}'></image>
+  <text class='pers-text'>{{userInfo.nickName}}</text>
+</view>
+<view class='gap-20'></view>
+<view class="tel_add" wx:if='{{tel==""}}'  bindtap="showtel">
+  如果您用手机号注册过会员或您想通过小程序绑定您的手机号
+
+  <image class='tel_image' src='../../images/icon_9.png'></image>
+
+</view>
+<view class='personal-item flex f-j-between f-a-center p4 f30 white-bg'>
+  <view><image class='item-icon' src='../../images/icon_8.png'></image>积分</view>
+  <span class="money"><span class="moneynum">{{score}}</span>积分<span class="smalltext">抵扣<i class="moneynum">{{money}}</i>元</span></span>
+</view>
+
+<view class='personal-item flex f-j-between f-a-center p4 f30 white-bg' bindtap="toLife">
+  <view><image class='item-icon' src='../../images/icon_16.png'></image>活动管理</view>
+  <image class='item-arrow' src='../../images/icon_9.png'></image>
+</view>
+
+<view wx:if="{{ismore}}" class='personal-item flex f-j-between f-a-center p4 f30 white-bg' bindtap="toLeftTab">
+  <view><image class='item-icon' src='../../images/icon_7.png'></image>活动管理</view>
+  <image class='item-arrow' src='../../images/icon_9.png'></image>
+</view>
+
+<view class='personal-item flex f-j-between f-a-center p4 f30 white-bg' bindtap="toWeb" >
+  <view><image class='item-icon' src='../../images/icon_6.png'></image>师兄驿站</view>
+  <view>
+    <view class='item-dot' wx:if='{{inviteDot}}'></view>
+    <image class='item-arrow' src='../../images/icon_9.png'></image>
+  </view>  
+</view>
+<view wx:if="{{ismore}}" class='personal-item flex f-j-between f-a-center p4 f30 white-bg' bindtap="toWxAbout" style="display:none">
+  <view><image class='item-icon' src='../../images/icon_6.png'></image><button class="user_btn" open-type="contact">客服电话</button></view>
+  <view class='item-phone f36'>{{servicePhone}}</view>
+</view>
+<view class='gap-20'></view>
+
+<view class='personal-item flex f-j-between f-a-center p4 f30 white-bg' >
+  <view><image class='item-icon' src='../../images/icon_4.png'></image>通行码</view>  
+  <view class='itphoneem- f36' bindtap="showQrcode"><span class="moneynum">查看</span></view>
+</view>
+
+<view class="qrwrap" wx:if="{{isqr}}">
+  <cover-image bindtap="previewImage1" wx:if="{{isqr}}" data-cur="{{qrcode}}" class="qrcode" src="{{qrcode}}" ></cover-image>
+</view>
+
+
+
+<navigator wx:if="{{ismore}}" class='personal-item flex f-j-between f-a-center p4 f30 white-bg' bindtap="toWxAbout">
+  <view><image class='item-icon' src='../../images/icon_5.png'></image>关于我们</view>
+  <image class='item-arrow' src='../../images/icon_9.png'></image>
+</navigator>
+
+
+
+<view class="go_wrap" bindtap="tolink"><view class="go_gzh">关注公众号，随时接收更多资讯和信息</view><view class="like_btn">立即关注</view></view>
+
+<!-- 协议弹框 -->
+<view class='bomb-box' wx:if='{{showBombStatus}}'>
+  <view class='black-bg'></view>
+  <view class='box-con white-bg center'>
+    <text class='item-tit block t-center f36'>温馨提示</text>
+    <view class='item-con f28'>
+      <text>我已阅读并同意以下协议：</text>
+      <navigator class='gold' url='../commitment/commitment'><text class='f36'>·</text>《产融通众筹参与者规则》</navigator>
+      <navigator class='gold' url='../userProtocol/userProtocol'><text class='f36'>·</text>《用户协议》</navigator>
+    </view>
+    <view class='item-bot f34 clear t-center'>
+       <!-- <view class='item-btn item-btn1 left' bindtap='closeBomb'>关闭</view>  -->
+      <!-- <view class='item-btn item-btn1 left'>关闭</view> -->
+      <view class='item-btn gold left' bindtap='agreeBomb'>确定</view>
+    </view>
+  </view>
+</view>
+
+<!-- 授权弹层 -->
+<view class='authorize-box' wx:if='{{showAuthorizeStatus}}'>
+  <view class='black-bg'></view>
+  <view class='authorize-con white-bg center'>
+    <text class='hdtext'>欢迎使用活动大师兄</text>
+     <text class='hdtext'>请完成微信登录以继续使用</text>
+    <button class='authorize-btn f36 white'  open-type="getUserInfo" bindgetuserinfo="toGotUserInfo" bindtap='gotUserInfo'>微信账号快速登录</button>
+     <text class='qxtext' bindtap='qxlogn'>取消</text>
+  </view>  
+</view>
+<!-- 授权弹层 -->
+<view class='authorize-box' wx:if='{{showTel}}'>
+  <view class='black-bg'></view>
+  <view class='authorize-con white-bg center'>
+    <view class="alertdiv"><image class='pers-img hdradius' src='{{userInfo.avatarUrl}}'></image></view>
+     <view class="alertdiv"><text class='tel_username'>{{userInfo.nickName}}</text></view>
+     <view class="alertdiv">您还未关联手机号</view>
+     <view class="alertdiv">这将影响部分功能的使用</view>
+    <button class='authorize-btn f36 white' open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">一键关联手机号</button>
+     <text class='qxtext' bindtap='qxtel'>取消</text>
+  </view>  
+</view>

@@ -1,37 +1,15 @@
-.wx_img{
-  height:120px;
-  border-bottom:#dadada solid 1px;
-  display:inline-block!important;
+.article_box{
+  height:176px;
+  background:#fff;
 }
-.card_item_wrap{
-  position:relative;
+.article_img{
+  height:140px;
 }
-.card_item{
-  position:absolute;
-  display:block;
-  left:0px;
-  top:0px;
+.detail_btn{
+  display: block;
   width:100%;
-}
-.desk_btn_wrap{
-  position:absolute;
-  bottom:10px;
-  left:0px;
-  z-index:999999;
-  width:100%;
-}
-.desk_btn{
-  
-  width:100px;
-  margin:0 auto;
-  display:block;
-  height: 30px;
-  font-size: 14px;
-  background: #03b349;
-  border-radius: 12px;
-  color: #fff;
+  line-height:36px;
   text-align: center;
-  line-height: 30px;
-  padding: 0px 10px;
-
+  background-color:#BE925C;
+  color:#fff;
 }

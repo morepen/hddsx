@@ -15,6 +15,7 @@ const app = getApp();
 
 Page({
   data: {
+    title:'关于我们',
     showAuthorizeStatus: true,
     logs: [],
     tagArr: [],
@@ -66,6 +67,25 @@ Page({
       }
     })
   },
+  onShareAppMessage: function () {
+    return {
+      title: '活动大师兄',
+      path: 'pages/wxabout/index',
+      success: function (res) {
+        // 分享成功
+      },
+      fail: function (res) {
+        // 分享失败
+      }
+    }
+  },
+  onShareTimeline: () => {
+    return {
+      title: "活动大师兄-"+this.data.title,
+      query: "",
+      imageUrl: "https://www.sxbbt.net/qrcode/hddsx.jpg"
+    }
+  }
 
 
 

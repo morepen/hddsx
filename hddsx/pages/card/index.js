@@ -7,6 +7,7 @@ const app = getApp();
 Page({
   // 页面的初始数据
   data: {
+    title:'活动地图',
     showAuthorizeStatus:true,
     longitude: 0, //经度 
     latitude: 0,  //纬度 
@@ -65,44 +66,88 @@ Page({
 
   // 生命周期函数--监听页面加载
   onLoad: function() {
-    
-
-    // 使用 wx.createMapContext 获取 map 上下文
-    this.mapCtx = wx.createMapContext('map')
-    let that = this;
-    // 调用微信内部获取位置 默认为wsg84 精确为gcj02
-    // map 组件使用的经纬度是火星坐标系，调用 wx.getLocation 接口需要指定 type 为 gcj02
-    wx.getLocation({
-      type: 'gcj02',
-      success: function (res) {
-        let lng = res.longitude;
-        let lat = res.latitude;
-        that.setData({
-          longitude: lng,
-          latitude: lat,
-          markers: that.getMarkersArr()
-        })
-        that.getPoiList(lng, lat);
-      },
-      fail: function(res) {
-        wx.showModal({
-          title: '定位服务已关闭',
-          content: '请在"设置"中打开定位服务，以获取准确的地址',
-          showCancel: false,
-          confirmText: '确定',
-          confirmColor: '#4D8AD7',
-          success: function(res) {
-            if (res.confirm) {
-              console.log('用户点击确定');
-            }
-          }
-        })
-      },
-      complete: function(res) {
-          // console.log(res);
-      }
-    })
+      //校验小程序是否具备某些权限
+this.checkLocation();  
+   
   },
+  //小程序进入首页  权限校验
+  checkLocation() {
+    let that = this;
+    //选择位置，需要用户授权
+    wx.getSetting({
+     success(res) {
+    
+      if (!res.authSetting['scope.userLocation']) {
+       wx.authorize({
+        scope: 'scope.userLocation',
+        success() {
+         wx.showToast({ //这里提示失败原因
+          title: '授权成功！',
+          duration: 1500
+         })
+        },
+        fail() {
+         that.showSettingToast('需要授权位置信息');
+        }
+       })
+      }else{
+        that.getAdd();
+      }
+     }
+    })
+   },
+showSettingToast: function (e) {
+  wx.showModal({
+   title: '提示！',
+   confirmText: '去设置',
+   showCancel: false,
+   content: e,
+   success: function (res) {
+    if (res.confirm) {
+     wx.navigateTo({
+      url: '../setting/setting',
+     })
+    }
+   }
+  })
+ },
+getAdd:function(){
+  debugger;
+  this.mapCtx = wx.createMapContext('map')
+     let that = this;
+     // 调用微信内部获取位置 默认为wsg84 精确为gcj02
+     // map 组件使用的经纬度是火星坐标系，调用 wx.getLocation 接口需要指定 type 为 gcj02
+     wx.getLocation({
+       type: 'gcj02',
+       success: function (res) {
+         let lng = res.longitude;
+         let lat = res.latitude;
+         that.setData({
+           longitude: lng,
+           latitude: lat,
+           markers: that.getMarkersArr()
+         })
+         that.getPoiList(lng, lat);
+       },
+       fail: function(res) {
+         wx.showModal({
+           title: '定位服务已关闭',
+           content: '请在"设置"中打开定位服务，以获取准确的地址',
+           showCancel: false,
+           confirmText: '确定',
+           confirmColor: '#4D8AD7',
+           success: function(res) {
+             if (res.confirm) {
+               console.log('用户点击确定');
+             }
+           }
+         })
+       },
+       complete: function(res) {
+           // console.log(res);
+       }
+     })
+},
   getOP:function(){
     app.getOpenid().then(function (res) {
 
@@ -139,6 +184,8 @@ Page({
   },
   onShow: function(){
     // this.requestMarkers();
+     // 使用 wx.createMapContext 获取 map 上下文
+     
   },
   // 生命周期函数--监听页面初次渲染完成
   onReady: function() {
@@ -152,7 +199,7 @@ Page({
     that.mapCtx = wx.createMapContext('map');
     that.mapCtx.getCenterLocation({
       success: function(res){
-        that.getPoiList(res.longitude, res.latitude)
+        //that.getPoiList(res.longitude, res.latitude)
       }
     })
   },
@@ -339,6 +386,14 @@ Page({
       console.log('打卡请求', e)
       let that = this;
       let dataset = e.currentTarget.dataset;
+      debugger;
+      if(JSON.stringify(dataset) == "{}"){
+        wx.showModal({
+          content: "未获取到地址，请打开位置里的设置开关",
+          showCancel: false
+        })
+        return false;
+      }
       let title = dataset.title;
       let address = dataset.address;
       let lat = dataset.clocklat;
@@ -356,7 +411,7 @@ Page({
         lng: lng, //经度 Number
         create_time: curtimeStamp //打卡当前时间戳 Number
       }
-     
+     debugger;
       wx.showModal({
         title: '打卡签到',
         content: `地址：${title}`,
@@ -435,6 +490,25 @@ Page({
       url: '/pages/usercenter/usercenter'
     })
     
+  },
+  onShareAppMessage: function () {
+    return {
+      title: '活动大师兄',
+      path: 'pages/card/index',
+      success: function (res) {
+        // 分享成功
+      },
+      fail: function (res) {
+        // 分享失败
+      }
+    }
+  },
+  onShareTimeline: () => {
+    return {
+      title: "活动大师兄-"+this.data.title,
+      query: "",
+      imageUrl: "https://www.sxbbt.net/qrcode/hddsx.jpg"
+    }
   }
 
 })

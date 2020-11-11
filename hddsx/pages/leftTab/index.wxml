@@ -4,6 +4,7 @@
 <div class="left_list">
  <div class="left_list_wrap">
   <div class="left_item" wx:for="{{typeArray}}"  bindtap="toLeftList" data-cur="{{index}}">
+    
      <cover-image class="item_img" src="{{item.image}}"></cover-image>
 
      <div class="item_text">{{item.name}}</div>

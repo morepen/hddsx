@@ -11,8 +11,8 @@
 }
 .user_btn{
   position:absolute;
-  right:40rpx;
-  top:30px;
+  right:10rpx;
+  top:10px;
   /* width: 44px; */
   height: 24px;
   font-size: 14px;
